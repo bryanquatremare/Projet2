@@ -108,7 +108,7 @@ int main(int argc, char *argv[])
 {
 	if(argc == 0)
 	{
-		printf("Paramètre incorrect, veuillez entrer le chemin vers le .pbm")
+		printf("Paramètre incorrect, veuillez entrer le chemin vers le .pbm");
 	}
 	char *image = NULL;
 	int taille[3];
