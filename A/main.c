@@ -106,10 +106,10 @@ char *readImage(char *file, char *image, int *taille) //Retourne le type (P1, P2
 
 int main(int argc, char *argv[])
 {
-	if(argc == 1)
+	if(argc == 1) //SI il n'y a aucun paramètre, renvoyer une erreur
 	{
-		printf("Paramètre incorrect, veuillez entrer le chemin vers le .pbm");
-		return 0;
+		printf("Paramètre incorrect: veuillez entrer le chemin vers le .pbm.\n");
+		return -1;
 	}
 	char *image = NULL;
 	int taille[3];
