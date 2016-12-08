@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
@@ -84,7 +84,7 @@ char *readImage(char *file, char *image, int *taille) //Retourne le type (P1, P2
 				}
 				else if(strncmp(p, "1", 1) == 0)
 				{
-					strcat(image, "#");
+					strcat(image, "\u2588");
 				}
 				p = strtok(NULL, " ");
 			}
