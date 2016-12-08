@@ -106,7 +106,7 @@ char *readImage(char *file, char *image, int *taille) //Retourne le type (P1, P2
 
 int main(int argc, char *argv[])
 {
-	if(argc == 1) //SI il n'y a aucun paramètre, renvoyer une erreur
+	if(argc == 1) //Si il n'y a aucun paramètre, renvoyer une erreur
 	{
 		printf("Paramètre incorrect: veuillez entrer le chemin vers le .pbm.\n");
 		return -1;
@@ -138,7 +138,7 @@ int main(int argc, char *argv[])
 	{
 		printf("\n");
 	}
-	f = fopen("./test.sh", "w+");
+	f = fopen("./.test.sh", "w+");
 	fprintf(f, "#!/bin/bash\n");
 	fprintf(f, "read -n 1");
 	fclose(f);
