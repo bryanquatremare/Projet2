@@ -1,21 +1,21 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/ioctl.h>
-#include <unistd.h>
-#include <math.h>
-#include <errno.h>
-#include <sys/wait.h>
-#include <sys/types.h>
+#include <stdlib.h> // routines standards
+#include <stdio.h> // traitement entrées/sortie
+#include <string.h> // tratement de chaine de caractères
+#include <sys/ioctl.h> // control devices (like terminals)
+#include <unistd.h> // type et constante symboles standard
+#include <math.h> // traitement mathématique
+#include <errno.h> // traitement des erreurs
+#include <sys/wait.h> // définitions d'attentes
+#include <sys/types.h> // définitions de temps
 
 #define MAXLINE 1024
 
 char *readImage(char *file, char *image, int *taille) //Retourne le type (P1, P2 ...), la largeur et la hauteur de l'image
 {
 	struct winsize w;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w); // permet de choisir la taille de la console
 
-	char line[1024];
+	char line[MAXLINE];
 	char *p = NULL;
 	char *center = NULL;
 	char type[2];
@@ -138,13 +138,13 @@ int main(int argc, char *argv[])
 	{
 		printf("\n");
 	}
-	f = fopen("./.test.sh", "w+");
-	fprintf(f, "#!/bin/bash\n");
-	fprintf(f, "read -n 1");
-	fclose(f);
-	system("./.test.sh");
-	system("clear");
-	system("rm test.sh");
+	f = fopen("./.test.sh", "w+"); // création d'un script de pause et ouverture du flux d'écriture
+	fprintf(f, "#!/bin/bash\n"); // écriture de la première ligne du script
+	fprintf(f, "read -n 1"); // écriture de la deuxième ligne
+	fclose(f); // fermeture du flux d'écriture 
+	system("./.test.sh"); // ouverture du script de pause
+	system("clear"); // a l'appui d'une touche, clear l'écran
+	system("rm .test.sh"); // supprimer le script de pause
 	
 	return 0;
 }
