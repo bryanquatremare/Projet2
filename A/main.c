@@ -1,27 +1,28 @@
-#include <stdlib.h> // routines standards
-#include <stdio.h> // traitement entrées/sortie
-#include <string.h> // tratement de chaine de caractères
-#include <sys/ioctl.h> // control devices (like terminals)
-#include <unistd.h> // type et constante symboles standard
-#include <math.h> // traitement mathématique
-#include <errno.h> // traitement des erreurs
-#include <sys/wait.h> // définitions d'attentes
-#include <sys/types.h> // définitions de temps
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/ioctl.h>
+#include <unistd.h>
+#include <math.h>
+#include <errno.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <termios.h>
 
 #define MAXLINE 1024
 
 char *readImage(char *file, char *image, int *taille) //Retourne le type (P1, P2 ...), la largeur et la hauteur de l'image
 {
 	struct winsize w;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w); // permet de choisir la taille de la console
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 
-	char line[MAXLINE];
+	char line[1024];
 	char *p = NULL;
 	char *center = NULL;
 	char type[2];
 	int i;
-	int width = w.ws_col;
 	int height = w.ws_row;
+	int width = w.ws_col;
 	FILE *fp;
 
 
@@ -102,19 +103,35 @@ char *readImage(char *file, char *image, int *taille) //Retourne le type (P1, P2
 	}
 }
 
-
+char getch()
+{
+    char buf=0;
+    struct termios old={0};
+    fflush(stdout);
+    if(tcgetattr(0, &old)<0)
+        perror("tcsetattr()");
+    old.c_lflag&=~ICANON;
+    old.c_lflag&=~ECHO;
+    old.c_cc[VMIN]=1;
+    old.c_cc[VTIME]=0;
+    if(tcsetattr(0, TCSANOW, &old)<0)
+        perror("tcsetattr ICANON");
+    if(read(0,&buf,1)<0)
+        perror("read()");
+    old.c_lflag|=ICANON;
+    old.c_lflag|=ECHO;
+    if(tcsetattr(0, TCSADRAIN, &old)<0)
+        perror ("tcsetattr ~ICANON");
+    printf("%c\n",buf);
+    return buf;
+}
 
 int main(int argc, char *argv[])
 {
-	if(argc == 1) //Si il n'y a aucun paramètre, renvoyer une erreur
-	{
-		printf("Paramètre incorrect: veuillez entrer le chemin vers le .pbm.\n");
-		return -1;
-	}
 	char *image = NULL;
 	int taille[3];
 	char chemin[256];
-	int i;
+	int i, pid;
 	FILE *f;
 
 	if(getenv("EXIASAVER1_PBM") != NULL) //Si la variable existe alors on entre sa valeur dans le chemin sinon on utilise le repertoire courant
@@ -128,23 +145,25 @@ int main(int argc, char *argv[])
 	strcat(chemin, "/");
 	strcat(chemin, argv[1]); //On finit d'ecrire le chemin
 
-	image = readImage(chemin, image, taille);
-	
-	system("clear");
-	printf("%s", image);
-	free(image);
+	pid = fork(); //On fork
 
-	for(i = 0; i<taille[2]; i++) //On cree un script pour faire une pause
+	switch(pid)
 	{
-		printf("\n");
+		case -1:
+			perror("fork");
+			exit(EXIT_FAILURE);
+			break;
+		case 0:
+			image = readImage(chemin, image, taille);
+			system("clear");
+			printf("%s", image);
+			break;
+		default:
+			wait(NULL);
+			getch();
+			system("clear");
+			break;
 	}
-	f = fopen("./.test.sh", "w+"); // création d'un script de pause et ouverture du flux d'écriture
-	fprintf(f, "#!/bin/bash\n"); // écriture de la première ligne du script
-	fprintf(f, "read -n 1"); // écriture de la deuxième ligne
-	fclose(f); // fermeture du flux d'écriture 
-	system("./.test.sh"); // ouverture du script de pause
-	system("clear"); // a l'appui d'une touche, clear l'écran
-	system("rm .test.sh"); // supprimer le script de pause
-	
-	return 0;
+	free(image);
+	return 0;	
 }
