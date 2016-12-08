@@ -13,9 +13,9 @@
 char *readImage(char *file, char *image, int *taille) //Retourne le type (P1, P2 ...), la largeur et la hauteur de l'image
 {
 	struct winsize w;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w); // permet de choisir la taille de la console
 
-	char line[1024];
+	char line[MAXLINE];
 	char *p = NULL;
 	char *center = NULL;
 	char type[2];
