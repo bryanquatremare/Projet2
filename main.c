@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
@@ -84,7 +84,7 @@ char *readImage(char *file, char *image, int *taille) //Retourne le type (P1, P2
 				}
 				else if(strncmp(p, "1", 1) == 0)
 				{
-					strcat(image, "#");
+					strcat(image, "\u2588");
 				}
 				p = strtok(NULL, " ");
 			}
@@ -92,6 +92,7 @@ char *readImage(char *file, char *image, int *taille) //Retourne le type (P1, P2
 		}
 		fclose(fp);
 		free(center);
+		taille[2] = height;
 		return image;
 	}
 	else //Si on ne peut pas ouvrir le fichier on affiche une erreur
@@ -106,9 +107,10 @@ char *readImage(char *file, char *image, int *taille) //Retourne le type (P1, P2
 int main(int argc, char *argv[])
 {
 	char *image = NULL;
-	int taille[2];
+	int taille[3];
 	char chemin[256];
-	int pid;
+	int i;
+	FILE *f;
 
 	if(getenv("EXIASAVER1_PBM") != NULL) //Si la variable existe alors on entre sa valeur dans le chemin sinon on utilise le repertoire courant
 	{
@@ -126,7 +128,16 @@ int main(int argc, char *argv[])
 	system("clear");
 	printf("%s", image);
 	free(image);
-	execl("read", "-n1");
+
+	for(i = 0; i<taille[2]; i++) //On cree un script pour faire une pause
+	{
+		printf("\n");
+	}
+	f = fopen("./test.sh", "w+");
+	fprintf(f, "#!/bin/bash\n");
+	fprintf(f, "read -n 1");
+	fclose(f);
+	system("./test.sh");
 	
 	
 	return 0;
