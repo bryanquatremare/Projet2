@@ -1,21 +1,21 @@
-#include <stdlib.h> //routines standards
-#include <stdio.h> //traitement entrées/sortie
-#include <string.h> //tratement de chaine de caractères
-#include <sys/ioctl.h> //control devices (like terminals)
-#include <unistd.h> //type et constante symboles standard
-#include <math.h> //traitement mathématique
-#include <errno.h> //traitement des erreurs
-#include <sys/wait.h> //définitions d'attentes
-#include <sys/types.h> //définitions de temps
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/ioctl.h>
+#include <unistd.h>
+#include <math.h>
+#include <errno.h>
+#include <sys/wait.h>
+#include <sys/types.h>
 
 #define MAXLINE 1024
 
 char *readImage(char *file, char *image, int *taille) //Retourne le type (P1, P2 ...), la largeur et la hauteur de l'image
 {
 	struct winsize w;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w); // permet de choisir la taille de la console
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 
-	char line[MAXLINE];
+	char line[1024];
 	char *p = NULL;
 	char *center = NULL;
 	char type[2];
@@ -92,6 +92,7 @@ char *readImage(char *file, char *image, int *taille) //Retourne le type (P1, P2
 		}
 		fclose(fp);
 		free(center);
+		taille[2] = height;
 		return image;
 	}
 	else //Si on ne peut pas ouvrir le fichier on affiche une erreur
@@ -106,9 +107,10 @@ char *readImage(char *file, char *image, int *taille) //Retourne le type (P1, P2
 int main(int argc, char *argv[])
 {
 	char *image = NULL;
-	int taille[2];
+	int taille[3];
 	char chemin[256];
-	int pid;
+	int i;
+	FILE *f;
 
 	if(getenv("EXIASAVER1_PBM") != NULL) //Si la variable existe alors on entre sa valeur dans le chemin sinon on utilise le repertoire courant
 	{
@@ -126,7 +128,16 @@ int main(int argc, char *argv[])
 	system("clear");
 	printf("%s", image);
 	free(image);
-	execl("read", "-n1");
+
+	for(i = 0; i<taille[2]; i++) //On cree un script pour faire une pause
+	{
+		printf("\n");
+	}
+	f = fopen("./test.sh", "w+");
+	fprintf(f, "#!/bin/bash\n");
+	fprintf(f, "read -n 1");
+	fclose(f);
+	system("./test.sh");
 	
 	
 	return 0;
