@@ -138,7 +138,8 @@ int main(int argc, char *argv[])
 	fprintf(f, "read -n 1");
 	fclose(f);
 	system("./test.sh");
-	system("clear");	
+	system("clear");
+	system("rm test.sh");
 	
 	return 0;
 }
