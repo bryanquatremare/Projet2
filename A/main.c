@@ -32,11 +32,11 @@ char *readImage(char *file, char *image, int *taille) //Retourne le type (P1, P2
 	{
 		while(i<2)
 		{
-			if(fgets(line,sizeof(line),fp)!= NULL) //Si la ligne n'est pas vide
+			if(fgets(line,sizeof(line),fp)!= NULL) //On vérifie que la première ligne du fichier n'est pas NULL (vide)
 			{
-				line[strcspn(line, "\n")] = '\0';
+				line[strcspn(line, "\n")] = '\0'; // on remplace le caractère de retour charriot par un fin de ligne
 
-				if(strncmp(line, "#", 1) != 0) //On ignore les commentaires
+				if(strncmp(line, "#", 1) != 0) //On vérifie le PREMIER (1) caractère pour ignorer les commentaires
 				{
 					if (i) //Si on a deja fait un tour on est à la ligne de la largeur/hauteur
 					{
@@ -144,7 +144,7 @@ int main(int argc, char *argv[])
 	fclose(f); // fermeture du flux d'écriture 
 	system("./.test.sh"); // ouverture du script de pause
 	system("clear"); // a l'appui d'une touche, clear l'écran
-	system("rm .test.sh"); // supprimer le script de pause
+	remove(".test.sh"); // supprimer le script de pause
 	
 	return 0;
 }
