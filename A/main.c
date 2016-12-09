@@ -7,21 +7,22 @@
 #include <errno.h> // traitement des erreurs
 #include <sys/wait.h> // définitions d'attentes
 #include <sys/types.h> // définitions de temps
+#include <termios.h>
 
 #define MAXLINE 1024
 
 char *readImage(char *file, char *image, int *taille) //Retourne le type (P1, P2 ...), la largeur et la hauteur de l'image
 {
 	struct winsize w;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w); // permet de choisir la taille de la console
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);  // permet de choisir la taille de la console
 
 	char line[MAXLINE];
 	char *p = NULL;
 	char *center = NULL;
 	char type[2];
 	int i;
-	int width = w.ws_col;
 	int height = w.ws_row;
+	int width = w.ws_col;
 	FILE *fp;
 
 
@@ -102,7 +103,28 @@ char *readImage(char *file, char *image, int *taille) //Retourne le type (P1, P2
 	}
 }
 
-
+char getch()
+{
+    char buf=0;
+    struct termios old={0};
+    fflush(stdout);
+    if(tcgetattr(0, &old)<0)
+        perror("tcsetattr()");
+    old.c_lflag&=~ICANON;
+    old.c_lflag&=~ECHO;
+    old.c_cc[VMIN]=1;
+    old.c_cc[VTIME]=0;
+    if(tcsetattr(0, TCSANOW, &old)<0)
+        perror("tcsetattr ICANON");
+    if(read(0,&buf,1)<0)
+        perror("read()");
+    old.c_lflag|=ICANON;
+    old.c_lflag|=ECHO;
+    if(tcsetattr(0, TCSADRAIN, &old)<0)
+        perror ("tcsetattr ~ICANON");
+    printf("%c\n",buf);
+    return buf;
+}
 
 int main(int argc, char *argv[])
 {
@@ -114,7 +136,7 @@ int main(int argc, char *argv[])
 	char *image = NULL;
 	int taille[3];
 	char chemin[256];
-	int i;
+	int i, pid;
 	FILE *f;
 
 	if(getenv("EXIASAVER1_PBM") != NULL) //Si la variable existe alors on entre sa valeur dans le chemin sinon on utilise le repertoire courant
@@ -128,16 +150,26 @@ int main(int argc, char *argv[])
 	strcat(chemin, "/");
 	strcat(chemin, argv[1]); //On finit d'ecrire le chemin
 
-	image = readImage(chemin, image, taille);
-	
-	system("clear");
-	printf("%s", image);
-	free(image);
+	pid = fork(); //On fork
 
-	for(i = 0; i<taille[2]; i++) //On cree un script pour faire une pause
+	switch(pid)
 	{
-		printf("\n");
+		case -1:
+			perror("fork");
+			exit(EXIT_FAILURE);
+			break;
+		case 0:
+			image = readImage(chemin, image, taille);
+			system("clear");
+			printf("%s", image);
+			break;
+		default:
+			wait(NULL);
+			getch();
+			system("clear");
+			break;
 	}
+<<<<<<< HEAD
 	f = fopen("./.test.sh", "w+"); // création d'un script de pause et ouverture du flux d'écriture
 	fprintf(f, "#!/bin/bash\n"); // écriture de la première ligne du script
 	fprintf(f, "read -n 1"); // écriture de la deuxième ligne
@@ -147,4 +179,8 @@ int main(int argc, char *argv[])
 	remove(".test.sh"); // supprimer le script de pause
 	
 	return 0;
+=======
+	free(image);
+	return 0;	
+>>>>>>> origin/master
 }
