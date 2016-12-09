@@ -1,6 +1,23 @@
 #include <stdlib.h>
 #include <stdio.h> // traitement entrées/sortie
 #include <string.h>
+#include <time.h> //ajout librairie pour utiliser les fontions manipulatrices de dates locales et systèmes
+
+void quelheure()
+{
+	time_t timer; // création de timer avec un paramètre spécial time_t afin qu'il puisse stocker toute la date
+	struct tm * t; // création de t qui pourra contenir la date sous la forme d'une structure
+
+	time(&timer); //réception de la date dans timer
+
+
+	t = localtime(&timer); // réception de la date contenue dans timer dans la structure t
+	printf("%02uh %02um %02us\n", t->tm_hour, t->tm_min, t->tm_sec); // affichage de l'heure les minutes et les secondes avec l'appel %02u
+	char *heure = t->tm_hour;
+	char *minute = t->tm_min;
+	char *seconde = t->tm_sec;
+}
+
 void lectureligne(char ligne[70])
 {
 	int n;
@@ -18,16 +35,15 @@ void lectureligne(char ligne[70])
 }
 int main()
 {
-	FILE *f;
-	FILE *g;
-	FILE *h;
-	FILE *k;
-	FILE *l;
-	FILE *m;
+	FILE *f, *g, *h, *k, *l, *m;
+	int *heure = NULL, *minute = NULL, *seconde = NULL;
 	char type[10];
 	char *tok = NULL;
 	int tab[2];
 	char ligne[70];
+	
+	quelheure;
+	printf("%s %s %s", *heure, *minute, *seconde);
 
 	f = fopen("test_coeur.pbm", "r");
 	g = fopen("test_coeur.pbm", "r");
