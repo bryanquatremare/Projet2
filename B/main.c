@@ -12,34 +12,33 @@ int main()
 
 	f = fopen("test_coeur.pbm", "r");	// on met l'adresse du fichier dans le pointeur
 
-	for(n=0; n<2;)
+	for(n=0; n<2;)	//tant que n est inferieur a 2 (qu'on a pas trouvé 2 lignes sans commentaires)
 	{
-		fgets(ligne, 500, f);
-		if(strncmp(ligne, "#", 1))
+		fgets(ligne, 500, f); // on rentre la ligne actuelle dans "ligne"
+		if(strncmp(ligne, "#", 1)) // on vérifie que le premier caractère n'est pas "#" (un commentaire), sinon on change de ligne
 		{
-				if(n)
+				if(n) //si on est déjà passé une fois dans la boucle, on gère les dimmensions
 				{
-					// on rentre les dimmensions du pbm dans la chaine ligne
 					tok = strtok(ligne, " ");	// on stocke la première dimmension (largeur) dans tok
 					tab[0] = atoi(tok);	// conversion (atoi) du char en int puis stockage dans tab[0]
 					tok = strtok(NULL, " "); // on stocke la deuxième dimmension (longueur) dans tok
 					tab[1] = atoi(tok);	// conversion (atoi) du char en int puis stockage dans tab[1]
-					n++; //incrémentation du compteur
+					n++; //incrémentation du compteur (passe a 2 donc on sort du for)
 				}
-				else
+				else // sinon, c'est qu'on y est jamais passé donc on gère le type
 				{
-					strcpy(type, ligne); // on rentre les "10" premiers caractères de la ligne actuelle de "f" dans "type" puis on passe à la ligne suivante
+					strcpy(type, ligne); // copie la chaine "ligne" dans "type" puisque à cette étape ligne = type
 					type[strcspn(type, "\n")] = '\0'; // On supprime le retour à la ligne de la fin de ligne
-					n++; //incrémentation du compteur
+					n++; //incrémentation du compteur (passe à 1) donc la prochaine ligne contiendra les dimmensions
 				}
 				
 		}
 	}
-		n = 0;
+	n = 0; // on réinitialise le compteur pour la nouvelle boucle
 
 		while(fgets(ligne, 100,f)!= NULL) // tant que la ligne existe
 		{
-			if(strncmp(ligne, "#", 1))
+			if(strncmp(ligne, "#", 1)) // on vérifie que le premier caractère n'est pas "#" (un commentaire), sinon on change de ligne
 			{
 				tok = strtok(ligne, " "); // découpage du premier morceau jusqu'au séparateur (" ") (permet la suppression des espace)
 				while(tok != NULL)	// tant que le token n'est pas vide (tant qu'on a pas atteint la fin de la ligne)
