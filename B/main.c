@@ -21,44 +21,24 @@ int main()
 	tok = strtok(NULL, " "); // on stocke la deuxième dimmension (longueur) dans tok
 	tab[1] = atoi(tok);	// conversion (atoi) du char en int puis stockage dans tab[1]
 
-			while(fgets(ligne,sizeof(ligne),f)!= NULL)
+		while(fgets(ligne, 100,f)!= NULL) // tant que la ligne existe
 		{
-			tok = strtok(ligne, " ");
-			while(tok != NULL)
+			tok = strtok(ligne, " "); // découpage du premier morceau jusqu'au séparateur (" ") (permet la suppression des espace)
+			while(tok != NULL)	// tant que le token n'est pas vide (tant qu'on a pas atteint la fin de la ligne)
     		{
-				if(!(strncmp(tok, "1", 1)))
+				if(!(strncmp(tok, "1", 1))) // si on lit 1 dans le .pbm
 				{
-					printf("#");
+					printf("#");	// on affiche le caractère #
 				}
-				else
+				else	// si on lit un 0 dans le .pbm
 				{
-					printf(" ");
+					printf(" ");	// sinon afficher un espace
 				}
-				tok = strtok(NULL, " ");
+				tok = strtok(NULL, " "); // on passe au token suivant
 			}
-			printf("\n");
+			printf("\n");	// retour à la ligne à la fin de chaque lignes
 		}
 
-
-/*	while(fgets(ligne, sizeof(ligne), f) != NULL)	// tant que la ligne existe
-	{
-		printf("Avant %s", ligne);
-		tok = strtok(ligne, " ");
-		printf("Après %s", tok);
-		for(n=0;n<strlen(ligne);n++) // ajouter 1 à n tant qu'il est inférieur au nombre de caractères dans la ligne
-		{
-			if(!(strncmp(tok, "1", 1))) // si on lit 1 dans le .pbm
-			{
-				printf("#"); // on affiche le caractère #
-			}
-			else
-			{
-				printf("."); // sinon afficher un espace
-			}
-			tok = strtok(NULL, " ");
-		}
-		printf("\n"); // retour à la ligne à la fin de chaque lignes
-	}*/
 	printf("Le fichier PBM est de type %s\n", type);
 	printf("Largeur = %d Longueur = %d.\n", tab[0], tab[1]);
 
