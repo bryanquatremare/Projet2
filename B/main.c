@@ -26,13 +26,13 @@ int main()
 			tok = strtok(ligne, " ");
 			while(tok != NULL)
     		{
-				if(strncmp(tok, "0", 1) == 0)
-				{
-					printf(" ");
-				}
-				else if(strncmp(tok, "1", 1) == 0)
+				if(!(strncmp(tok, "1", 1)))
 				{
 					printf("#");
+				}
+				else
+				{
+					printf(" ");
 				}
 				tok = strtok(NULL, " ");
 			}
@@ -40,7 +40,7 @@ int main()
 		}
 
 
-/*	while(fgets(ligne, 100, f) != NULL)	// tant que la ligne existe
+/*	while(fgets(ligne, sizeof(ligne), f) != NULL)	// tant que la ligne existe
 	{
 		printf("Avant %s", ligne);
 		tok = strtok(ligne, " ");
