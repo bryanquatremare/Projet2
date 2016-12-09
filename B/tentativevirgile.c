@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdio.h> // traitement entrées/sortie
 #include <string.h>
 void lectureligne(char ligne[70])
@@ -17,7 +18,12 @@ void lectureligne(char ligne[70])
 }
 int main()
 {
-	FILE* f, g, h, k, l, m;
+	FILE *f;
+	FILE *g;
+	FILE *h;
+	FILE *k;
+	FILE *l;
+	FILE *m;
 	char type[10];
 	char *tok = NULL;
 	int tab[2];
@@ -52,12 +58,17 @@ int main()
 
 	while(fgets(ligne, 70, f) != NULL)
 	{
-		lectureligne(f,ligne);
-		lectureligne(g,ligne);
-		lectureligne(h,ligne);
-		lectureligne(k,ligne);
-		lectureligne(l,ligne);
-		lectureligne(m,ligne);
+		lectureligne(ligne);
+		fgets(ligne, 70, g);
+		lectureligne(ligne);
+		fgets(ligne, 70, h);
+		lectureligne(ligne);
+		fgets(ligne, 70, k);
+		lectureligne(ligne);
+		fgets(ligne, 70, l);
+		lectureligne(ligne);
+		fgets(ligne, 70, m);
+		lectureligne(ligne);
 		printf("\n");
 	}
 	
