@@ -27,12 +27,12 @@ int main()
 
 	char ligne[100];
 
-	f = fopen("test_coeur.pbm", "r");
-	g = fopen("test_coeur.pbm", "r");
-	h = fopen("test_coeur.pbm", "r");
-	k = fopen("test_coeur.pbm", "r");
-	l = fopen("test_coeur.pbm", "r");
-	m = fopen("test_coeur.pbm", "r");
+	f = fopen("1.pbm", "r");
+	g = fopen("2.pbm", "r");
+	h = fopen("5.pbm", "r");
+	k = fopen("9.pbm", "r");
+	l = fopen("3.pbm", "r");
+	m = fopen("7.pbm", "r");
 
 	while(fgets(ligne, 100, f) != NULL)
 	{
