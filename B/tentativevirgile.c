@@ -1,7 +1,8 @@
 #include <stdio.h> // traitement entrées/sortie
 #include <string.h>
-void lectureligne(pointeur, ligne)
+void lectureligne(FILE *pointeur,char ligne[100])
 {
+	int n;
 	for(n=0;n<strlen(ligne);n++)
 	{
 		if(ligne[n] == '1')
@@ -23,7 +24,7 @@ int main()
 	FILE *k;
 	FILE *l;
 	FILE *m;
-	
+
 	char ligne[100];
 
 	f = fopen("test_coeur.pbm", "r");
@@ -32,7 +33,7 @@ int main()
 	k = fopen("test_coeur.pbm", "r");
 	l = fopen("test_coeur.pbm", "r");
 	m = fopen("test_coeur.pbm", "r");
-	int n;
+
 	while(fgets(ligne, 100, f) != NULL)
 	{
 		lectureligne(f,ligne);
@@ -41,7 +42,7 @@ int main()
 		lectureligne(k,ligne);
 		lectureligne(l,ligne);
 		lectureligne(m,ligne);
-		print("\n");
+		printf("\n");
 	}
 	fclose(f);
 	fclose(g);
@@ -49,7 +50,7 @@ int main()
 	fclose(k);
 	fclose(l);
 	fclose(m);
-	
+
 	return 0;
 }
 
