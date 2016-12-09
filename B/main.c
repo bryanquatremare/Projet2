@@ -13,7 +13,7 @@ int main()
 	f = fopen("test_coeur.pbm", "r");	// on met l'adresse du fichier dans le pointeur
 
 	fgets(type, 10, f); // on rentre les "10" premiers caractères de la ligne actuelle de "f" dans "type" puis on passe à la ligne suivante
-	type[strcspn(type, "\n")] = '\0';
+	type[strcspn(type, "\n")] = '\0'; // On supprime le retour à la ligne de la fin de ligne
 	fgets(ligne, 15, f); // on rentre les dimmensions du pbm dans la chaine ligne
 
 	tok = strtok(ligne, " ");	// on stocke la première dimmension (largeur) dans tok
@@ -21,22 +21,45 @@ int main()
 	tok = strtok(NULL, " "); // on stocke la deuxième dimmension (longueur) dans tok
 	tab[1] = atoi(tok);	// conversion (atoi) du char en int puis stockage dans tab[1]
 
-	while(fgets(ligne, 100, f) != NULL)	// tant que la ligne existe
+			while(fgets(ligne,sizeof(ligne),f)!= NULL)
+		{
+			tok = strtok(ligne, " ");
+			while(tok != NULL)
+    		{
+				if(strncmp(tok, "0", 1) == 0)
+				{
+					printf(" ");
+				}
+				else if(strncmp(tok, "1", 1) == 0)
+				{
+					printf("#");
+				}
+				tok = strtok(NULL, " ");
+			}
+			printf("\n");
+		}
+
+
+/*	while(fgets(ligne, 100, f) != NULL)	// tant que la ligne existe
 	{
+		printf("Avant %s", ligne);
+		tok = strtok(ligne, " ");
+		printf("Après %s", tok);
 		for(n=0;n<strlen(ligne);n++) // ajouter 1 à n tant qu'il est inférieur au nombre de caractères dans la ligne
 		{
-			if(ligne[n] == '1') // si on lit 1 dans le .pbm
+			if(!(strncmp(tok, "1", 1))) // si on lit 1 dans le .pbm
 			{
 				printf("#"); // on affiche le caractère #
 			}
 			else
 			{
-				printf(" "); // sinon afficher un espace
+				printf("."); // sinon afficher un espace
 			}
+			tok = strtok(NULL, " ");
 		}
 		printf("\n"); // retour à la ligne à la fin de chaque lignes
-	}
-	printf("Le fichier est PBM de type %s\n", type);
+	}*/
+	printf("Le fichier PBM est de type %s\n", type);
 	printf("Largeur = %d Longueur = %d.\n", tab[0], tab[1]);
 
 	fclose(f); // fermeture du fichier .pbm
