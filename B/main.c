@@ -16,7 +16,7 @@ int main()
 	{
 		fgets(ligne, 500, f);
 		if(strncmp(ligne, "#", 1))
-			{
+		{
 				if(n)
 				{
 					// on rentre les dimmensions du pbm dans la chaine ligne
@@ -33,8 +33,8 @@ int main()
 					n++; //incrémentation du compteur
 				}
 				
-			}
 		}
+	}
 		n = 0;
 
 		while(fgets(ligne, 100,f)!= NULL) // tant que la ligne existe
