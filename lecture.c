@@ -4,6 +4,7 @@
 #include <unistd.h>//Fork, pipe
 #include <sys/wait.h>//Wait function
 
+#define CHAR_PRINTED "#"
 
 /* We use a code to read and process the PBM :
 0 = space
@@ -46,7 +47,7 @@ void readPBM(char *path, int *size, char *type, char *output)
 
 		i = 0;
 		j = 0;
-		strcpy(output, "0");// Init output at 0
+		strcpy(output, "");// Init output at 0
   		while(fgets(tmp, 1024, stdin) != NULL) //Put remainings entry in output
   		{
 			strcat(output, tmp);
@@ -169,7 +170,7 @@ void strToTable(int **table, char *str, int size[])//Input : table[][], str, siz
 		else if(str[n] == '2')//Go to next row in the table
 		{
 			j++;
-			i = 0;
+			i = -1;
 		}
 		i++;
 	}
@@ -184,7 +185,7 @@ void printTable(int **table, int size[])
 		{
 			if(table[j][i] == 1)
 	 		{
-	 			printf("#");
+	 			printf(CHAR_PRINTED);
 	 		}
 	 		else
 	 		{
@@ -213,6 +214,9 @@ int main(int argc, char *argv[])
 	int i, j;
 
 	strcpy(path, "coeur.pbm");
+
+	if(argv[1] != NULL)
+		strcpy(path, argv[1]);
 
 	readPBM(path, size, type, str); //Read the picture file
 	table = initTable(table, size); //Initialize the table
