@@ -11,6 +11,8 @@ int main()
 	char *tok = NULL; // création du token pour strtok
 	int dim[2];	//création d'un tableau 
 	int n; // variable pour parcourir toute la ligne
+	int *colone = NULL;
+	int *ligne = NULL;
 
 	f = fopen("test_coeur.pbm", "r");	// on met l'adresse du fichier dans le pointeur
 
@@ -61,6 +63,7 @@ int main()
 
 	printf("Le fichier PBM est de type %s\n", type);
 	printf("Largeur = %d Longueur = %d.\n", dim[0], dim[1]);
+	printf("Ce terminal possède %d colones et %d lignes.", colone, ligne);
 
 
 	fclose(f); // fermeture du fichier .pbm
