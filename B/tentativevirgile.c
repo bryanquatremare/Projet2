@@ -2,13 +2,14 @@
 #include <stdio.h> // traitement entrées/sortie
 #include <string.h>
 #include <time.h> //ajout librairie pour utiliser les fontions manipulatrices de dates locales et systèmes
+#include <math.h> // pour le header pour l'instant
 
-void heurelocale(int *heure, int *minute, int *seconde)
+void heurelocale(int *heuredizaine, int *heureunite, int *minutedizaine, int *minuteunite, int *secondedizaine, int *secondeunite)
 {
 	char h[2];
 	char m[2];
 	char s[2];
-	int i, j, k;
+	int chiffretampon;
 	time_t timer; // création de timer avec un paramètre spécial time_t afin qu'il puisse stocker toute la date
 	struct tm * t; // création de t qui pourra contenir la date sous la forme d'une structure
 
@@ -18,9 +19,21 @@ void heurelocale(int *heure, int *minute, int *seconde)
 	sprintf(h,"%02u",t->tm_hour);
 	sprintf(m,"%02u",t->tm_min);
 	sprintf(s,"%02u",t->tm_sec);
-	*heure = atoi(h);
-	*minute = atoi(m);
-	*seconde = atoi(s);	
+	*heuredizaine = atoi(h);
+	*minutedizaine = atoi(m);
+	*secondedizaine = atoi(s);
+	chiffretampon = floor(*heuredizaine / 10);
+	*heureunite = *heuredizaine - chiffretampon * 10;
+	*heuredizaine = chiffretampon;
+	chiffretampon = floor(*minutedizaine / 10);
+	*minuteunite = *minutedizaine - chiffretampon * 10;
+	*minutedizaine = chiffretampon;
+	chiffretampon = floor(*secondedizaine / 10);
+	*secondeunite = *secondedizaine - chiffretampon * 10;
+	*secondedizaine = chiffretampon;
+	
+	// dizaine = floor(*heure/10)
+	//unité = *heure - dizaine*10
 }
 
 void lectureligne(char ligne[70])
@@ -41,17 +54,20 @@ void lectureligne(char ligne[70])
 int main()
 {
 	FILE *f, *g, *h, *k, *l, *m;
-	int *heure = malloc(2 * sizeof(int *));
-	int *minute = malloc(2 * sizeof(int *));
-	int *seconde = malloc(2 * sizeof(int *));
+	int *heuredizaine = malloc(sizeof(int *));
+	int *minutedizaine = malloc(sizeof(int *));
+	int *secondedizaine = malloc(sizeof(int *));
+	int *heureunite = malloc(sizeof(int *));
+	int *minuteunite = malloc(sizeof(int *));
+	int *secondeunite = malloc(sizeof(int *));
 	
 	char type[10];
 	char *tok = NULL;
 	int tab[2];
 	char ligne[70];
 	
-	heurelocale(heure, minute, seconde);
-	printf("%02u %02u %02u", *heure, *minute, *seconde);
+	heurelocale(heuredizaine, heureunite, minutedizaine, minuteunite, secondedizaine, secondeunite);
+	printf("%u%u %u%u %u%u", *heuredizaine, *heureunite, *minutedizaine, *minuteunite, *secondedizaine, *secondeunite);
 	printf("\n");
 
 	f = fopen("test_coeur.pbm", "r");
@@ -107,8 +123,11 @@ int main()
 	fclose(l);
 	fclose(m);
 	
-	free(heure);
-	free(minute);
-	free(seconde);
+	free(heuredizaine);
+	free(heureunite);
+	free(minutedizaine);
+	free(minuteunite);
+	free(secondedizaine);
+	free(secondeunite);
 	return 0;
 }
