@@ -5,11 +5,11 @@
 
 void taillefen(int *colonnes, int *lignes) // fonction qui récupère les dimmensions de la fenêtre
 {
-	struct winsize fen;
-	int col;
-	int lig;
+	struct winsize fen;	//structure de la librairie ioctl.h contenant des informations sur la fenêtre
+	int col; // variable qui contiendra le nombre de colonnes
+	int lig; // variable qui contiendra le nombre de lignes
 
-	ioctl(0, TIOCGWINSZ, &fen);
+	ioctl(0, TIOCGWINSZ, &fen); // instruction de ioctl permettant de connaître la taille de la fenêtre
 
 	col = fen.ws_col;
 	lig = fen.ws_row;
@@ -25,12 +25,14 @@ int main()
 	char type[10];	// création de la variable contenant le type de PBM
 	char *tok = NULL; // création du token pour strtok
 	int dim[2];	//création d'un tableau
-	int *lignes = malloc(sizeof(int *));
-	int *colonnes = malloc(sizeof(int *));
-	int n; // variable pour parcourir toute la ligne
+	int *lignes = malloc(sizeof(int *)); // création du pointeur qui contiendra le nombre de lignes
+	int *colonnes = malloc(sizeof(int *));	// création du pointeur qui contiendra le nombre de colonnes
+	int n; // variable compteur (pour parcourir toute la ligne)
 	int nc;
 	int quelprojet;
 	int nbradd = 1;
+
+	taillefen(colonnes, lignes); // on appelle la fonction pour connaître la taille de la fenêtre
 
 	f = fopen("test_coeur.pbm", "r");	// on met l'adresse du fichier dans le pointeur
 
@@ -79,7 +81,6 @@ int main()
 				printf("\n");	// retour à la ligne à la fin de chaque lignes
 			}
 		}
-	taillefen(colonnes, lignes);
 	printf("Le fichier PBM est de type %s\n", type);
 	printf("Largeur = %d Longueur = %d.\n", dim[0], dim[1]);
 	printf("Ce terminal possède %d colonnes et %d lignes.\n", *colonnes, *lignes);
