@@ -2,10 +2,12 @@
 #include <string.h> // traitement des chaines de caractère
 #include <sys/ioctl.h> // contrôle des périphériques
 
-void winsize () // fonction qui récupère les dimmensions de la fenêtre
+void fentaille (int *colone, int *ligne) // fonction qui récupère les dimmensions de la fenêtre
 {
-	int longueur;
-	int largeur;
+	struct winsize fen;
 
+	ioctl(0, TIOCGWINSZ, &fen)
 
+	*colone = fen.ws_col;
+	*ligne = fen.ws_row;
 }
