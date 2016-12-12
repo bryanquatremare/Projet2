@@ -1,7 +1,22 @@
 #include <stdio.h> // traitement entrées/sortie
+#include <stdlib.h>
 #include <string.h> // traitement des chaines de caractère
+#include <sys/ioctl.h> // contrôle des périphériques
 
-#include "taille.c"
+void taillefen(int *colonnes, int *lignes) // fonction qui récupère les dimmensions de la fenêtre
+{
+	struct winsize fen;
+	int col;
+	int lig;
+
+	ioctl(0, TIOCGWINSZ, &fen);
+
+	col = fen.ws_col;
+	lig = fen.ws_row;
+
+	*colonnes = col;
+	*lignes = lig;
+}
 
 int main()
 {
@@ -9,7 +24,9 @@ int main()
 	char ligne[500];	// création de la chaine de caractère qui stockera la ligne
 	char type[10];	// création de la variable contenant le type de PBM
 	char *tok = NULL; // création du token pour strtok
-	int dim[2];	//création d'un tableau 
+	int dim[2];	//création d'un tableau
+	int *lignes = malloc(sizeof(int *));
+	int *colonnes = malloc(sizeof(int *));
 	int n; // variable pour parcourir toute la ligne
 	int nc;
 	int quelprojet;
@@ -62,10 +79,13 @@ int main()
 				printf("\n");	// retour à la ligne à la fin de chaque lignes
 			}
 		}
-
+	taillefen(colonnes, lignes);
 	printf("Le fichier PBM est de type %s\n", type);
 	printf("Largeur = %d Longueur = %d.\n", dim[0], dim[1]);
+	printf("Ce terminal possède %d colonnes et %d lignes.\n", *colonnes, *lignes);
 
 	fclose(f); // fermeture du fichier .pbm
+	free(lignes);
+	free(colonnes);
 	return 0;
 }
