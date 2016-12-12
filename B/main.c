@@ -45,7 +45,7 @@ int main()
 	    		{
 					if(!(strncmp(tok, "1", 1))) // si on lit 1 dans le .pbm
 					{
-						printf("#");	// on affiche le caractère #
+						printf("█");	// on affiche le caractère #
 					}
 					else	// si on lit un 0 dans le .pbm
 					{
