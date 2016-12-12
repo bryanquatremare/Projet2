@@ -1,6 +1,8 @@
 #include <stdio.h> // traitement entrées/sortie
 #include <string.h> // traitement des chaines de caractère
 
+#include "Taille.c" // fonction pour connaitre la taille de la fenêtre
+
 int main()
 {
 	FILE *f;		//création du pointeur vers le fichier
