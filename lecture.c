@@ -19,10 +19,13 @@ void readPBM(char *path, int *size, char *type, char *output)
 	char *image = NULL;
 	char *tok = NULL;
   	char tmp[1024];
-  	char line[500];
+  	char line[512];
 
 	int fd[2];
   	int i, j, n, pid;
+
+  	fflush(stdin);
+  	fflush(stdout);
 
   	//Open the pipe for inter-process communication
   	pipe(&fd[0]);
@@ -38,7 +41,7 @@ void readPBM(char *path, int *size, char *type, char *output)
 		close(fd[0]);//Close old stdout
 		
 
-		fgets(type, 500, stdin); //Put first entry in type
+		fgets(type, 512, stdin); //Put first entry in type
 		type[strcspn(type, "\n")] = '\0';
 		fgets(tmp, 1024, stdin); //Second in tmp then convert in int
 		size[0] = atoi(tmp); 
@@ -46,7 +49,6 @@ void readPBM(char *path, int *size, char *type, char *output)
 		size[1] = atoi(tmp);
 
 		i = 0;
-		j = 0;
 		strcpy(output, "");// Init output at 0
   		while(fgets(tmp, 1024, stdin) != NULL) //Put remainings entry in output
   		{
@@ -70,7 +72,7 @@ void readPBM(char *path, int *size, char *type, char *output)
 
 		for(i=0; i<2;)
 		{
-			fgets(line, 500, f);
+			fgets(line, 512, f);
 			if(strncmp(line, "#", 1))//If line start with #, line is a comment so we ignore it
 			{
 				if(i) //If we already made one iteration, get the size of the picture
@@ -94,7 +96,7 @@ void readPBM(char *path, int *size, char *type, char *output)
 		printf("%s\n", type);
 		printf("%d\n", size[0]);
 		printf("%d\n", size[1]);
-		while(fgets(line, 100, f) != NULL)
+		while(fgets(line, 512, f) != NULL)
 		{
 			tok = strtok(line, " ");
 			while(tok != NULL)//Print the lines of the pictures to the parent process while ignoring spaces
@@ -111,6 +113,7 @@ void readPBM(char *path, int *size, char *type, char *output)
 			}
 			printf("2");//Print 2 as an "End of line" character
 		}
+		printf("\n");
 		fclose(f);
 	}
 	else //Print error if fork failed
@@ -196,33 +199,33 @@ void printTable(int **table, int size[])
 	}
 }
 
-int main(int argc, char *argv[])
-{
-	char *str = malloc(4096 * sizeof(char)); //Allocate memory
-	if(str == NULL) //Print error if allocation failed
-	{
-		printf("Error allocating memory");
-		exit(EXIT_FAILURE);
-	}
+// int main(int argc, char *argv[])
+// {
+// 	char *str = malloc(4096 * sizeof(char)); //Allocate memory
+// 	if(str == NULL) //Print error if allocation failed
+// 	{
+// 		printf("Error allocating memory");
+// 		exit(EXIT_FAILURE);
+// 	}
 
-	// //Define the vars
-	char type[500];
-	char path[256];
+// 	// //Define the vars
+// 	char type[512];
+// 	char path[256];
 
-	int **table = NULL;
-	int size[2];
-	int i, j;
+// 	int **table = NULL;
+// 	int size[2];
+// 	int i, j;
 
-	strcpy(path, "coeur.pbm");
+// 	strcpy(path, "coeur.pbm");
 
-	if(argv[1] != NULL)
-		strcpy(path, argv[1]);
+// 	if(argv[1] != NULL)
+// 		strcpy(path, argv[1]);
 
-	readPBM(path, size, type, str); //Read the picture file
-	table = initTable(table, size); //Initialize the table
-	strToTable(table, str, size); //Transform the string to a table
-	printTable(table, size); //Print the table on screen
+// 	readPBM(path, size, type, str); //Read the picture file
+// 	table = initTable(table, size); //Initialize the table
+// 	strToTable(table, str, size); //Transform the string to a table
+// 	printTable(table, size); //Print the table on screen
 
-	free(str); //Free memory
-	free(table);
-}
+// 	free(str); //Free memory
+// 	free(table);
+// }
