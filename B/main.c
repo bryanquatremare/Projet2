@@ -1,7 +1,7 @@
 #include <stdio.h> // traitement entrées/sortie
 #include <string.h> // traitement des chaines de caractère
 
-#include "Taille.c" // fonction pour connaitre la taille de la fenêtre
+#include "taille.c" // fonction pour connaitre la taille de la fenêtre
 
 int main()
 {
@@ -61,6 +61,7 @@ int main()
 
 	printf("Le fichier PBM est de type %s\n", type);
 	printf("Largeur = %d Longueur = %d.\n", dim[0], dim[1]);
+
 
 	fclose(f); // fermeture du fichier .pbm
 	return 0;
