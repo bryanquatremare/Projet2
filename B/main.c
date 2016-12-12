@@ -1,6 +1,8 @@
 #include <stdio.h> // traitement entrées/sortie
 #include <string.h> // traitement des chaines de caractère
 
+#include "taille.c"
+
 int main()
 {
 	FILE *f;		//création du pointeur vers le fichier
@@ -9,6 +11,9 @@ int main()
 	char *tok = NULL; // création du token pour strtok
 	int dim[2];	//création d'un tableau 
 	int n; // variable pour parcourir toute la ligne
+	int nc;
+	int quelprojet;
+	int nbradd = 1;
 
 	f = fopen("test_coeur.pbm", "r");	// on met l'adresse du fichier dans le pointeur
 
@@ -38,6 +43,7 @@ int main()
 
 		while(fgets(ligne, 100,f)!= NULL) // tant que la ligne existe
 		{
+			n++;
 			if(strncmp(ligne, "#", 1)) // on vérifie que le premier caractère n'est pas "#" (un commentaire), sinon on change de ligne
 			{
 				tok = strtok(ligne, " "); // découpage du premier morceau jusqu'au séparateur (" ") (permet la suppression des espace)
@@ -45,7 +51,7 @@ int main()
 	    		{
 					if(!(strncmp(tok, "1", 1))) // si on lit 1 dans le .pbm
 					{
-						printf("█");	// on affiche le caractère #
+						printf("█");	// on affiche le caractère █
 					}
 					else	// si on lit un 0 dans le .pbm
 					{
