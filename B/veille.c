@@ -1,3 +1,9 @@
+#include <stdio.h> // traitement entrées/sortie
+#include <stdlib.h>
+#include <string.h> // traitement des chaines de caractère
+#include <math.h>
+#include <time.h>
+
 void heurelocale(int *heuredizaine, int *heureunite, int *minutedizaine, int *minuteunite, int *secondedizaine, int *secondeunite)
 {
 	char h[2];
