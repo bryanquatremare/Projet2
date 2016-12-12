@@ -12,7 +12,7 @@
 2 = \n
 */
 
-void readPBM(char *path, int *size, char *type, char *output)
+void readPBM(char *path, int *size, char *type, char *output) // path = chemin du pbm, size = dim[], type = type[], output = ligne[]
 {
 	FILE *f;
 
