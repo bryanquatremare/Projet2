@@ -7,7 +7,7 @@ int main()
 	char ligne[500];	// création de la chaine de caractère qui stockera la ligne
 	char type[10];	// création de la variable contenant le type de PBM
 	char *tok = NULL; // création du token pour strtok
-	int tab[2];	//création d'un tableau 
+	int dim[2];	//création d'un tableau 
 	int n; // variable pour parcourir toute la ligne
 
 	f = fopen("test_coeur.pbm", "r");	// on met l'adresse du fichier dans le pointeur
@@ -20,9 +20,9 @@ int main()
 				if(n) //si on est déjà passé une fois dans la boucle, on gère les dimmensions
 				{
 					tok = strtok(ligne, " ");	// on stocke la première dimmension (largeur) dans tok
-					tab[0] = atoi(tok);	// conversion (atoi) du char en int puis stockage dans tab[0]
+					dim[0] = atoi(tok);	// conversion (atoi) du char en int puis stockage dans tab[0]
 					tok = strtok(NULL, " "); // on stocke la deuxième dimmension (longueur) dans tok
-					tab[1] = atoi(tok);	// conversion (atoi) du char en int puis stockage dans tab[1]
+					dim[1] = atoi(tok);	// conversion (atoi) du char en int puis stockage dans tab[1]
 					n++; //incrémentation du compteur (passe a 2 donc on sort du for)
 				}
 				else // sinon, c'est qu'on y est jamais passé donc on gère le type
@@ -58,7 +58,7 @@ int main()
 		}
 
 	printf("Le fichier PBM est de type %s\n", type);
-	printf("Largeur = %d Longueur = %d.\n", tab[0], tab[1]);
+	printf("Largeur = %d Longueur = %d.\n", dim[0], dim[1]);
 
 	fclose(f); // fermeture du fichier .pbm
 	return 0;
