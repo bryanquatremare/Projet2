@@ -15,18 +15,12 @@ int main()
 	int *lignes = malloc(sizeof(int *)); // création du pointeur qui contiendra le nombre de lignes
 	int *colonnes = malloc(sizeof(int *));	// création du pointeur qui contiendra le nombre de colonnes
 	int n; // variable compteur (pour parcourir toute la ligne)
-	int l; // variable pour espacer l'image
 
 	taillefen(colonnes, lignes); // on appelle la fonction pour connaître la taille de la fenêtre
 	readPBM("test_coeur.pbm", dim, type, ligne);	// on envoie les paramètres nécéssaires au module de lecture
 
 	centreVert(lignes, colonnes, dim[1]);
-	l = 1;
-	while(l != (*colonnes/2)-(dim[0]/2))
-	{
-		printf(" ");
-		l++;
-	}
+	centreHor(colonnes, dim[0]);
 	for(n=0;n<strlen(ligne);n++)
 	{
 		if(ligne[n] == '1')	// si on lit 1 dans le .pbm
@@ -41,22 +35,12 @@ int main()
 		else if(ligne[n] == '2') //sinon si on lit 2 dans le pbm
 		{
 			printf("\n"); // faire un retour à la ligne
-			l = 1;
-			while(l != (*colonnes/2)-(dim[0]/2))	
-			{
-				printf(" ");
-				l++;
-			}
+			centreHor(colonnes, dim[0]);
 			if(*lignes >= 35 & *colonnes >=100)
 			{
 				printf("%s\n",tampon);
 				strcpy(tampon,"");
-				l = 1;
-				while(l != (*colonnes/2)-(dim[0]/2))	
-				{
-					printf(" ");
-					l++;
-				}
+				centreHor(colonnes, dim[0]);
 			}			
 		}
 		else	// sinon si on lit un 0 dans le .pbm
