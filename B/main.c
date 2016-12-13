@@ -22,21 +22,7 @@ int main()
 
 	readPBM("test_coeur.pbm", dim, type, ligne);	// on envoie les paramètres nécéssaires au module de lecture
 
-	n = 1;
-
-	while(n != (*lignes/2)-(dim[1]/2))
-	{	
-		printf("\n");
-		n++;
-	}
-
-	if((*lignes/2)-(dim[1]/2) % 2 != 0)
-	{
-		printf("\n");
-	}
-
-	n = 0;
-
+	centre(colonnes, dim[0]);
 	for(n=0;n<strlen(ligne);n++)
 	{
 		if(ligne[n] == '1')	// si on lit 1 dans le .pbm
@@ -52,18 +38,8 @@ int main()
 			printf(" ");	// afficher un espace
 		}
 	}
+	centre(colonnes, dim[0]);
 
-	n = 1;
-	while(n != (*lignes/2)-(dim[1]/2))
-	{	
-		printf("\n");
-		n++;
-	}
-
-	if((*lignes/2)-(dim[1]/2) % 2 != 0)
-	{
-		printf("\n");
-	}
 	/*printf("\n");
 	printf("Le fichier PBM est de type %s\n", type);
 	printf("Largeur = %d Longueur = %d.\n", dim[0], dim[1]);
