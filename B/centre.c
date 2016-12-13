@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void centre(int *axelig, int *axecol, int axepbm) // fonction pour centrer l'image
+void centreVert(int *axelig, int *axecol, int axepbm) // fonction pour centrer l'image
 {
 int n = 1; // compteur de saut de ligne
 	if(*axecol >= 100 & *axelig >=35)
