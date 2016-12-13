@@ -17,10 +17,9 @@ int main()
 	int n; // variable compteur (pour parcourir toute la ligne)
 
 	taillefen(colonnes, lignes); // on appelle la fonction pour connaître la taille de la fenêtre
-
 	readPBM("test_coeur.pbm", dim, type, ligne);	// on envoie les paramètres nécéssaires au module de lecture
 
-	centre(colonnes, dim[0]);
+	centre(lignes, dim[1]);
 	for(n=0;n<strlen(ligne);n++)
 	{
 		if(ligne[n] == '1')	// si on lit 1 dans le .pbm
@@ -51,7 +50,7 @@ int main()
 			}
 		}
 	}
-	centre(colonnes, dim[0]);
+	centre(lignes, dim[1]);
 
 	/*printf("\n");
 	printf("Le fichier PBM est de type %s\n", type);
