@@ -9,15 +9,39 @@ int main()
 	system("clear");
 	FILE *f;		//création du pointeur vers le fichier
 	char *ligne = malloc(sizeof(char) * 1024);	// création de la chaine de caractère qui stockera la ligne
+	char *num0 = malloc(sizeof(char) * 30);
+	char *num1 = malloc(sizeof(char) * 30);
+	char *num2 = malloc(sizeof(char) * 30);
+	char *num3 = malloc(sizeof(char) * 30);
+	char *num4 = malloc(sizeof(char) * 30);
+	char *num5 = malloc(sizeof(char) * 30);
+	char *num6 = malloc(sizeof(char) * 30);
+	char *num7 = malloc(sizeof(char) * 30);
+	char *num8 = malloc(sizeof(char) * 30);
+	char *num9 = malloc(sizeof(char) * 30);
+	char *sep = malloc(sizeof(char) * 30);
+	char *space = malloc(sizeof(char) * 10);
 	char type[10];	// création de la variable contenant le type de PBM
 	char tampon[100] = "";
-	int dim[2];	//création d'un tableau
+	int dimnum[2];	//création d'un tableau contenant les dimmensions du PBM
+	int dim[2]; //création d'un tableau contenant les dimmensions de l'espace et :
 	int *lignes = malloc(sizeof(int *)); // création du pointeur qui contiendra le nombre de lignes
 	int *colonnes = malloc(sizeof(int *));	// création du pointeur qui contiendra le nombre de colonnes
 	int n; // variable compteur (pour parcourir toute la ligne)
 
 	taillefen(colonnes, lignes); // on appelle la fonction pour connaître la taille de la fenêtre
-	readPBM("test_coeur.pbm", dim, type, ligne);	// on envoie les paramètres nécéssaires au module de lecture
+	readPBM("../Test/0.pbm", dimnum, type, num0);	// on envoie les paramètres nécéssaires au module de lecture
+	readPBM("../Test/1.pbm", dimnum, type, num1);	
+	readPBM("../Test/2.pbm", dimnum, type, num2);	
+	readPBM("../Test/3.pbm", dimnum, type, num3);
+	readPBM("../Test/4.pbm", dimnum, type, num4);
+	readPBM("../Test/5.pbm", dimnum, type, num5);	
+	readPBM("../Test/6.pbm", dimnum, type, num6);
+	readPBM("../Test/7.pbm", dimnum, type, num7);	
+	readPBM("../Test/8.pbm", dimnum, type, num8);	
+	readPBM("../Test/9.pbm", dimnum, type, num9);
+	readPBM("../Test/sep.pbm", dimnum, type, sep);	
+	readPBM("../Test/space.pbm", dim, type, ligne);	
 
 	centreVert(lignes, colonnes, dim[1]);
 	centreHor(colonnes, dim[0]);
@@ -55,12 +79,25 @@ int main()
 	}
 	centreVert(lignes, colonnes, dim[1]);
 
-	/*printf("\n");
+	/* DEBUG
+	printf("\n");
 	printf("Le fichier PBM est de type %s\n", type);
 	printf("Largeur = %d Longueur = %d.\n", dim[0], dim[1]);
 	printf("Ce terminal possède %d colonnes et %d lignes.\n", *colonnes, *lignes);*/
 
 	free(lignes);
 	free(colonnes);
+	free(num0);
+	free(num1);
+	free(num2);
+	free(num3);
+	free(num4);
+	free(num5);
+	free(num6);
+	free(num7);
+	free(num8);
+	free(num9);
+	free(sep);
+	free(space);
 	return 0;
 }
