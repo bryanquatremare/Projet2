@@ -10,7 +10,7 @@ int main()
 	FILE *f;		//création du pointeur vers le fichier
 	char *ligne = malloc(sizeof(char) * 1024);	// création de la chaine de caractère qui stockera la ligne
 	char type[10];	// création de la variable contenant le type de PBM
-	char tampon[100];
+	char tampon[100] = "";
 	int dim[2];	//création d'un tableau
 	int *lignes = malloc(sizeof(int *)); // création du pointeur qui contiendra le nombre de lignes
 	int *colonnes = malloc(sizeof(int *));	// création du pointeur qui contiendra le nombre de colonnes
