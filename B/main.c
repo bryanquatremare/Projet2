@@ -6,6 +6,7 @@
 
 int main()
 {
+	system("clear");
 	FILE *f;		//création du pointeur vers le fichier
 	char *ligne = malloc(sizeof(char) * 1024);	// création de la chaine de caractère qui stockera la ligne
 	char type[10];	// création de la variable contenant le type de PBM
@@ -20,6 +21,21 @@ int main()
 	taillefen(colonnes, lignes); // on appelle la fonction pour connaître la taille de la fenêtre
 
 	readPBM("test_coeur.pbm", dim, type, ligne);	// on envoie les paramètres nécéssaires au module de lecture
+
+	n = 1;
+
+	while(n != (*lignes/2)-(dim[1]/2))
+	{	
+		printf("\n");
+		n++;
+	}
+
+	if((*lignes/2)-(dim[1]/2) % 2 != 0)
+	{
+		printf("\n");
+	}
+
+	n = 0;
 
 	for(n=0;n<strlen(ligne);n++)
 	{
@@ -36,10 +52,22 @@ int main()
 			printf(" ");	// afficher un espace
 		}
 	}
-	printf("\n");	// retour à la ligne à la fin de chaque lignes
+
+	n = 1;
+	while(n != (*lignes/2)-(dim[1]/2))
+	{	
+		printf("\n");
+		n++;
+	}
+
+	if((*lignes/2)-(dim[1]/2) % 2 != 0)
+	{
+		printf("\n");
+	}
+	/*printf("\n");
 	printf("Le fichier PBM est de type %s\n", type);
 	printf("Largeur = %d Longueur = %d.\n", dim[0], dim[1]);
-	printf("Ce terminal possède %d colonnes et %d lignes.\n", *colonnes, *lignes);
+	printf("Ce terminal possède %d colonnes et %d lignes.\n", *colonnes, *lignes);*/
 
 	free(lignes);
 	free(colonnes);
