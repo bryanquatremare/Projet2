@@ -22,11 +22,11 @@ int main()
 
 	centreVert(lignes, colonnes, dim[1]);
 	l = 1;
-		while(l != (*colonnes/2)-(dim[0]/2))
-		{
-			printf(" ");
-			l++;
-		}
+	while(l != (*colonnes/2)-(dim[0]/2))
+	{
+		printf(" ");
+		l++;
+	}
 	for(n=0;n<strlen(ligne);n++)
 	{
 		if(ligne[n] == '1')	// si on lit 1 dans le .pbm
@@ -42,17 +42,22 @@ int main()
 		{
 			printf("\n"); // faire un retour à la ligne
 			l = 1;
-			if(*lignes >= 35 & *colonnes >=100)
-			{
-				printf("%s\n",tampon);
-				strcpy(tampon,"");
-			}
-
-		while(l != (*colonnes/2)-(dim[0]/2))	
+			while(l != (*colonnes/2)-(dim[0]/2))	
 			{
 				printf(" ");
 				l++;
 			}
+			if(*lignes >= 35 & *colonnes >=100)
+			{
+				printf("%s\n",tampon);
+				strcpy(tampon,"");
+				l = 1;
+				while(l != (*colonnes/2)-(dim[0]/2))	
+				{
+					printf(" ");
+					l++;
+				}
+			}			
 		}
 		else	// sinon si on lit un 0 dans le .pbm
 		{
