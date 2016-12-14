@@ -34,9 +34,7 @@ void readPBM(char *path, int *size, char *type, char *output)
 		wait(NULL); //Wait for child's end
 		close(fd[1]);//Close pipe's write stream
 		close(0);//Close stdin
-		dup(fd[0]);//Duplicate stdout
-		close(fd[0]);//Close old stdout
-		
+		dup2(fd[0], 0);//Duplicate stdin
 
 		fgets(type, 500, stdin); //Put first entry in type
 		type[strcspn(type, "\n")] = '\0';
@@ -57,10 +55,9 @@ void readPBM(char *path, int *size, char *type, char *output)
 	else if(pid == 0) //Child process
 	{
   		close(fd[0]);//Close pipe's read stream
-		close(1);//Close stdout
-		dup(fd[1]);//Duplicate stdin
-		close(fd[1]);//Close old stdin
-
+  		
+		dup2(fd[1], 1);//Duplicate stdin
+		close(1);//Close stdin
 
 		if(!(f = fopen(path, "r")))
 		{
@@ -96,20 +93,23 @@ void readPBM(char *path, int *size, char *type, char *output)
 		printf("%d\n", size[1]);
 		while(fgets(line, 100, f) != NULL)
 		{
-			tok = strtok(line, " ");
-			while(tok != NULL)//Print the lines of the pictures to the parent process while ignoring spaces
-    		{
-				if(!(strncmp(tok, "1", 1)))
-				{
-					printf("1");
+			if(strncmp(line, "#", 1))
+			{
+				tok = strtok(line, " ");
+				while(tok != NULL)//Print the lines of the pictures to the parent process while ignoring spaces
+	    		{
+					if(!(strncmp(tok, "1", 1)))
+					{
+						printf("1");
+					}
+					else
+					{
+						printf("0");
+					}
+					tok = strtok(NULL, " ");
 				}
-				else
-				{
-					printf("0");
-				}
-				tok = strtok(NULL, " ");
+				printf("2");//Print 2 as an "End of line" character
 			}
-			printf("2");//Print 2 as an "End of line" character
 		}
 		printf("\n");
 		fclose(f);

@@ -5,6 +5,7 @@
 #include <unistd.h>
 
 #include "avions.h"
+#include "lecture.h"
 
 #define CHAR_PRINTED "#"
 
@@ -16,21 +17,13 @@ typedef struct plane plane;
     	int sens;
 	};
 
-char getcha()
-{
-	char c;
-	c = getchar();
-	return c;
-}
-
-
 int main(int argc, char *argv[])
 {
 //Load terminal size
 	struct winsize w;
 	ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 	int col = w.ws_col;
-	int row = w.ws_row;
+	int row = w.ws_row - 1;
 
 //Init some var
 	int i, j;
@@ -88,7 +81,7 @@ int main(int argc, char *argv[])
 		for(j=0; j<col; j++)
 	 		table[i][j] = ' ';
 
-	//system("clear");//Clear the terminal
+	system("clear");//Clear the terminal
 	plane.sens=0;
 	swapPlane(col, row, planeRight, table, plane);//Swap the plane in the table
 
@@ -97,9 +90,10 @@ int main(int argc, char *argv[])
 	 		printf("%c", table[i][j]);
 	while(1)
 	{
-		//printf("x:%d y:%d", plane.x, plane.y);
+		printf("x:%d y:%d", plane.x, plane.y);
+		fflush(stdout);
+		c = getch();
 		//system("clear");
-		printf("test");
 		switch (c)
 		{
 			case 'z':
@@ -127,10 +121,9 @@ int main(int argc, char *argv[])
 				exit(0);
 				break;
 		}
-		// for(i=0; i<row; i++)
-		// 	for(j=0; j<col; j++)
-	 // 			printf("%c", table[i][j]);
-	 	break;
+		for(i=0; i<row; i++)
+			for(j=0; j<col; j++)
+	 			printf("%c", table[i][j]);
 	}
 
 	for(i=0; i<row+1; i++)
