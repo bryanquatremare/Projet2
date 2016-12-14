@@ -3,22 +3,19 @@
 #include <stdlib.h>
 #include <time.h>
 
-
-
-
 int main()
 {	
 	system("clear");
 	int i;
-	int n;
+	int t;
 	printf("Entrer le nombre de secondes avant refresh... ");
-	scanf("%d", &n);
+	scanf("%d", &t);
 	while(1)
 	{
 		printf("Cet écran sera actualisé dans quelques secondes ");
 		fflush(stdout);
 		i = 0;
-		while(i < n)
+		while(i < t)
 		{
 			
 			sleep(1);

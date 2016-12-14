@@ -21,6 +21,7 @@ int main()
 	char *num9 = malloc(sizeof(char) * 300);
 	char *sep = malloc(sizeof(char) * 300);
 	char *space = malloc(sizeof(char) * 100);
+	char taille[20] = "";
 	char type[10];	// création de la variable contenant le type de PBM
 	char tampon[100] = "";
 	int dimnum[2];	//création d'un tableau contenant les dimmensions du PBM
@@ -29,11 +30,51 @@ int main()
 	int *colonnes = malloc(sizeof(int *));	// création du pointeur qui contiendra le nombre de colonnes
 	int n; // variable compteur (pour parcourir toute la ligne)
 	int t;
+	int k;
+	
+	printf("Entrer le nombre de secondes avant refresh... ");
+	scanf("%d", &t);
+	
+	printf("Entrer la taille de chiffre souhaitée... (default pour 5/3 ou sup pour 10/6)   ");
+	fgets(taille, sizeof(taille), stdin);
+	switch(taille)
+	{
+		case '':
+		k = 1;
+		break;
+		
+		case 'default':
+		k = 1;
+		break;
+		
+		case 'Default':
+		k = 1;
+		break;
+		
+		case 'DEFAULT':
+		k = 1;
+		break;
+		
+		case 'sup':
+		k = 2;
+		break;
+		
+		case 'Sup':
+		k = 2;
+		break;
+		
+		case 'SUP':
+		k = 2;
+		break;
+		
+		default:
+		k = 1;
+		break;
+	}
 	
 	while(1)
 	{
-		printf("Entrer le nombre de secondes avant refresh... ");
-		scanf("%d", &t);
+		
 		taillefen(colonnes, lignes); // on appelle la fonction pour connaître la taille de la fenêtre
 		readPBM("../Test/0.pbm", dimnum, type, num0);	// on envoie les paramètres nécéssaires au module de lecture
 		readPBM("../Test/1.pbm", dimnum, type, num1);	
@@ -52,14 +93,14 @@ int main()
 		assemblage(ligne, num0, num1, num2, num3, num4, num5, num6, num7, num8, num9, sep, space);
 		printf("après assemblage");
 
-		centreVert(lignes, colonnes, dim[1]);
+		centreVert(lignes, colonnes, dim[1], k);
 		centreHor(colonnes, dim[0]);
 		for(n=0;n<strlen(ligne);n++)
 		{
 			if(ligne[n] == '1')	// si on lit 1 dans le .pbm
 			{
 				printf("█");	// on affiche le caractère █
-				if(*lignes >= 35 & *colonnes >=100)
+				if(*lignes >= 35 & *colonnes >=100 | k == 2)
 				{
 					printf("█");
 					strcat(tampon,"██");
@@ -69,7 +110,7 @@ int main()
 			{
 				printf("\n"); // faire un retour à la ligne
 				centreHor(colonnes, dim[0]);
-				if(*lignes >= 35 & *colonnes >=100)
+				if(*lignes >= 35 & *colonnes >=100 | k == 2)
 				{
 					printf("%s\n",tampon);
 					strcpy(tampon,"");
@@ -79,14 +120,14 @@ int main()
 			else	// sinon si on lit un 0 dans le .pbm
 			{
 				printf(" ");	// afficher un espace
-				if(*lignes >= 35 & *colonnes >=100)
+				if(*lignes >= 35 & *colonnes >=100 | k == 2)
 				{
 					printf(" ");
 					strcat(tampon,"  ");
 				}
 			}
 		}
-		centreVert(lignes, colonnes, dim[1]);
+		centreVert(lignes, colonnes, dim[1], k);
 		printf("Cet écran sera actualisé dans quelques secondes ");
 		fflush(stdout);
 		i = 0;
