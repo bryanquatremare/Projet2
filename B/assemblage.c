@@ -241,6 +241,8 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 			p = o;
 			while(un[m] != 2)
 				{
+					printf("%c", un[m]);
+					printf("%d", m);
 					sprintf(ligne,"%c", un[m]);
 					m++;
 					o++;
