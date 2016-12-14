@@ -308,7 +308,7 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 					m++;
 				}
 		}
-		sprintf(ligne,"%c", "2");
+		sprintf(ligne,"%c", '2');
 		n++;
 		printf("après l'ecriture de toute une ligne");
 	}
