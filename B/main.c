@@ -41,7 +41,11 @@ int main()
 	readPBM("../Test/8.pbm", dimnum, type, num8);	
 	readPBM("../Test/9.pbm", dimnum, type, num9);
 	readPBM("../Test/sep.pbm", dimnum, type, sep);	
-	readPBM("../Test/space.pbm", dim, type, ligne);	
+	readPBM("../Test/space.pbm", dim, type, space);	
+
+	printf("avant assemblage");
+	assemblage(ligne, num0, num1, num2, num3, num4, num5, num6, num7, num8, num9, sep, space);
+	printf("après assemblage");
 
 	centreVert(lignes, colonnes, dim[1]);
 	centreHor(colonnes, dim[0]);
@@ -84,7 +88,7 @@ int main()
 	printf("Le fichier PBM est de type %s\n", type);
 	printf("Largeur = %d Longueur = %d.\n", dim[0], dim[1]);
 	printf("Ce terminal possède %d colonnes et %d lignes.\n", *colonnes, *lignes);*/
-
+	printf("après affichage");
 	free(lignes);
 	free(colonnes);
 	free(num0);
