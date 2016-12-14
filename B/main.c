@@ -9,18 +9,18 @@ int main()
 	system("clear");
 	FILE *f;		//création du pointeur vers le fichier
 	char *ligne = malloc(sizeof(char) * 1024);	// création de la chaine de caractère qui stockera la ligne
-	char *num0 = malloc(sizeof(char) * 30);
-	char *num1 = malloc(sizeof(char) * 30);
-	char *num2 = malloc(sizeof(char) * 30);
-	char *num3 = malloc(sizeof(char) * 30);
-	char *num4 = malloc(sizeof(char) * 30);
-	char *num5 = malloc(sizeof(char) * 30);
-	char *num6 = malloc(sizeof(char) * 30);
-	char *num7 = malloc(sizeof(char) * 30);
-	char *num8 = malloc(sizeof(char) * 30);
-	char *num9 = malloc(sizeof(char) * 30);
-	char *sep = malloc(sizeof(char) * 30);
-	char *space = malloc(sizeof(char) * 10);
+	char *num0 = malloc(sizeof(char) * 300);
+	char *num1 = malloc(sizeof(char) * 300);
+	char *num2 = malloc(sizeof(char) * 300);
+	char *num3 = malloc(sizeof(char) * 300);
+	char *num4 = malloc(sizeof(char) * 300);
+	char *num5 = malloc(sizeof(char) * 300);
+	char *num6 = malloc(sizeof(char) * 300);
+	char *num7 = malloc(sizeof(char) * 300);
+	char *num8 = malloc(sizeof(char) * 300);
+	char *num9 = malloc(sizeof(char) * 300);
+	char *sep = malloc(sizeof(char) * 300);
+	char *space = malloc(sizeof(char) * 100);
 	char type[10];	// création de la variable contenant le type de PBM
 	char tampon[100] = "";
 	int dimnum[2];	//création d'un tableau contenant les dimmensions du PBM
@@ -89,6 +89,7 @@ int main()
 	printf("Largeur = %d Longueur = %d.\n", dim[0], dim[1]);
 	printf("Ce terminal possède %d colonnes et %d lignes.\n", *colonnes, *lignes);*/
 	printf("après affichage");
+	free(ligne);
 	free(lignes);
 	free(colonnes);
 	free(num0);

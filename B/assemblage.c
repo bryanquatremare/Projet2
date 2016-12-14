@@ -28,7 +28,7 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 	char *numeroneuf = num9;
 	char *numerozero = num0;
 
-	char un[30], deux[30], trois[30], quatre[30], cinq[30], six[30];
+	char un[300], deux[300], trois[300], quatre[300], cinq[300], six[300];
 
 	heurelocale(heuredizaine, heureunite, minutedizaine, minuteunite, secondedizaine, secondeunite);
 
@@ -238,74 +238,74 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 		{
 			printf("avant la lecture de la ligne du premier nombre");
 			m = o;
-			p = o;
-			while(un[m] != 2)
+			
+	while(un[m] != '2')
 				{
 					printf("%c", un[m]);
 					printf("%d", m);
 					sprintf(ligne,"%c", un[m]);
 					m++;
-					o++;
 				}
-			m = p;
-			while(space[m] != 2)
+			m = o;
+			while(space[m] != '2')
 				{
 					sprintf(ligne,"%c", space[m]);
 					m++;
 				}
-			m = p;
-			while(deux[m] != 2)
+			m = o;
+			while(deux[m] != '2')
 				{
 					sprintf(ligne,"%c", deux[m]);
 					m++;
 				}
-			m = p;
-			while(sep[m] != 2)
+			m = o;
+			while(sep[m] != '2')
 				{
 					sprintf(ligne,"%c", sep[m]);
 					m++;
 				}
-			m = p;
-			while(trois[m] != 2)
+			m = o;
+			while(trois[m] != '2')
 				{
 					sprintf(ligne,"%c", trois[m]);
 					m++;
 				}
-			m = p;
-			while(space[m] != 2)
+			m = o;
+			while(space[m] != '2')
 				{
 					sprintf(ligne,"%c", space[m]);
 					m++;
 				}
-			m = p;
-			while(quatre[m] != 2)
+			m = o;
+			while(quatre[m] != '2')
 				{
 					sprintf(ligne,"%c", quatre[m]);
 					m++;
 				}
-			m = p;
-			while(sep[m] != 2)
+			m = o;
+			while(sep[m] != '2')
 				{
 					sprintf(ligne,"%c", sep[m]);
 					m++;
 				}
-			m = p;
-			while(cinq[m] != 2)
+			m = o;
+			while(cinq[m] != '2')
 				{
 					sprintf(ligne,"%c", cinq[m]);
 					m++;
 				}
-			m = p;
-			while(space[m] != 2)
+			m = o;
+			while(space[m] != '2')
 				{
 					sprintf(ligne,"%c", space[m]);
 					m++;
 				}
-			m = p;
-			while(six[m] != 2)
+			m = o;
+			while(six[m] != '2')
 				{
 					sprintf(ligne,"%c", six[m]);
 					m++;
+					o++;
 				}
 		}
 		sprintf(ligne,"%c", '2');
@@ -319,4 +319,14 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 	free(minuteunite);
 	free(secondedizaine);
 	free(secondeunite);
+	free(numeroun);
+	free(numerodeux);
+	free(numerotrois);
+	free(numeroquatre);
+	free(numerocinq);
+	free(numerosix);
+	free(numerosept);
+	free(numerohuit);
+	free(numeroneuf);
+	free(numerozero);
 }
