@@ -28,67 +28,86 @@ int main()
 	int *lignes = malloc(sizeof(int *)); // création du pointeur qui contiendra le nombre de lignes
 	int *colonnes = malloc(sizeof(int *));	// création du pointeur qui contiendra le nombre de colonnes
 	int n; // variable compteur (pour parcourir toute la ligne)
-
-	taillefen(colonnes, lignes); // on appelle la fonction pour connaître la taille de la fenêtre
-	readPBM("../Test/0.pbm", dimnum, type, num0);	// on envoie les paramètres nécéssaires au module de lecture
-	readPBM("../Test/1.pbm", dimnum, type, num1);	
-	readPBM("../Test/2.pbm", dimnum, type, num2);	
-	readPBM("../Test/3.pbm", dimnum, type, num3);
-	readPBM("../Test/4.pbm", dimnum, type, num4);
-	readPBM("../Test/5.pbm", dimnum, type, num5);	
-	readPBM("../Test/6.pbm", dimnum, type, num6);
-	readPBM("../Test/7.pbm", dimnum, type, num7);	
-	readPBM("../Test/8.pbm", dimnum, type, num8);	
-	readPBM("../Test/9.pbm", dimnum, type, num9);
-	readPBM("../Test/sep.pbm", dimnum, type, sep);	
-	readPBM("../Test/space.pbm", dim, type, space);	
-
-	printf("avant assemblage");
-	assemblage(ligne, num0, num1, num2, num3, num4, num5, num6, num7, num8, num9, sep, space);
-	printf("après assemblage");
-
-	centreVert(lignes, colonnes, dim[1]);
-	centreHor(colonnes, dim[0]);
-	for(n=0;n<strlen(ligne);n++)
+	int t;
+	
+	while(1)
 	{
-		if(ligne[n] == '1')	// si on lit 1 dans le .pbm
-		{
-			printf("█");	// on affiche le caractère █
-			if(*lignes >= 35 & *colonnes >=100)
-			{
-				printf("█");
-				strcat(tampon,"██");
-			}
-		}
-		else if(ligne[n] == '2') //sinon si on lit 2 dans le pbm
-		{
-			printf("\n"); // faire un retour à la ligne
-			centreHor(colonnes, dim[0]);
-			if(*lignes >= 35 & *colonnes >=100)
-			{
-				printf("%s\n",tampon);
-				strcpy(tampon,"");
-				centreHor(colonnes, dim[0]);
-			}			
-		}
-		else	// sinon si on lit un 0 dans le .pbm
-		{
-			printf(" ");	// afficher un espace
-			if(*lignes >= 35 & *colonnes >=100)
-			{
-				printf(" ");
-				strcat(tampon,"  ");
-			}
-		}
-	}
-	centreVert(lignes, colonnes, dim[1]);
+		printf("Entrer le nombre de secondes avant refresh... ");
+		scanf("%d", &t);
+		taillefen(colonnes, lignes); // on appelle la fonction pour connaître la taille de la fenêtre
+		readPBM("../Test/0.pbm", dimnum, type, num0);	// on envoie les paramètres nécéssaires au module de lecture
+		readPBM("../Test/1.pbm", dimnum, type, num1);	
+		readPBM("../Test/2.pbm", dimnum, type, num2);	
+		readPBM("../Test/3.pbm", dimnum, type, num3);
+		readPBM("../Test/4.pbm", dimnum, type, num4);
+		readPBM("../Test/5.pbm", dimnum, type, num5);	
+		readPBM("../Test/6.pbm", dimnum, type, num6);
+		readPBM("../Test/7.pbm", dimnum, type, num7);	
+		readPBM("../Test/8.pbm", dimnum, type, num8);	
+		readPBM("../Test/9.pbm", dimnum, type, num9);
+		readPBM("../Test/sep.pbm", dimnum, type, sep);	
+		readPBM("../Test/space.pbm", dim, type, space);	
 
-	/* DEBUG
-	printf("\n");
-	printf("Le fichier PBM est de type %s\n", type);
-	printf("Largeur = %d Longueur = %d.\n", dim[0], dim[1]);
-	printf("Ce terminal possède %d colonnes et %d lignes.\n", *colonnes, *lignes);*/
-	printf("après affichage");
+		printf("avant assemblage");
+		assemblage(ligne, num0, num1, num2, num3, num4, num5, num6, num7, num8, num9, sep, space);
+		printf("après assemblage");
+
+		centreVert(lignes, colonnes, dim[1]);
+		centreHor(colonnes, dim[0]);
+		for(n=0;n<strlen(ligne);n++)
+		{
+			if(ligne[n] == '1')	// si on lit 1 dans le .pbm
+			{
+				printf("█");	// on affiche le caractère █
+				if(*lignes >= 35 & *colonnes >=100)
+				{
+					printf("█");
+					strcat(tampon,"██");
+				}
+			}
+			else if(ligne[n] == '2') //sinon si on lit 2 dans le pbm
+			{
+				printf("\n"); // faire un retour à la ligne
+				centreHor(colonnes, dim[0]);
+				if(*lignes >= 35 & *colonnes >=100)
+				{
+					printf("%s\n",tampon);
+					strcpy(tampon,"");
+					centreHor(colonnes, dim[0]);
+				}			
+			}
+			else	// sinon si on lit un 0 dans le .pbm
+			{
+				printf(" ");	// afficher un espace
+				if(*lignes >= 35 & *colonnes >=100)
+				{
+					printf(" ");
+					strcat(tampon,"  ");
+				}
+			}
+		}
+		centreVert(lignes, colonnes, dim[1]);
+		printf("Cet écran sera actualisé dans quelques secondes ");
+		fflush(stdout);
+		i = 0;
+		while(i < t)
+		{
+			
+			sleep(1);
+			printf(". ");
+			fflush(stdout);
+			i++;
+		}
+		system("clear");
+
+		/* DEBUG
+		printf("\n");
+		printf("Le fichier PBM est de type %s\n", type);
+		printf("Largeur = %d Longueur = %d.\n", dim[0], dim[1]);
+		printf("Ce terminal possède %d colonnes et %d lignes.\n", *colonnes, *lignes);*/
+		printf("après affichage");
+
+	}
 	free(ligne);
 	free(lignes);
 	free(colonnes);
@@ -104,5 +123,6 @@ int main()
 	free(num9);
 	free(sep);
 	free(space);
+
 	return 0;
 }

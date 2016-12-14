@@ -15,7 +15,6 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 	int n = 0;
 	int m = 0;
 	int o = 0;
-	int p = 0;
 	int i = 0;
 	char *numeroun = num1;
 	char *numerodeux = num2;
