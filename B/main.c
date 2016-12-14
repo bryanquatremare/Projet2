@@ -1,6 +1,7 @@
 #include <stdio.h> // traitement entrées/sortie
 #include <stdlib.h>
 #include <string.h> // traitement des chaines de caractère
+#include <unistd.h>
 
 #include "header.h"
 
@@ -21,7 +22,7 @@ int main()
 	char *num9 = malloc(sizeof(char) * 300);
 	char *sep = malloc(sizeof(char) * 300);
 	char *space = malloc(sizeof(char) * 100);
-	char taille[20] = "";
+	char taille[200] = "";
 	char type[10];	// création de la variable contenant le type de PBM
 	char tampon[100] = "";
 	int dimnum[2];	//création d'un tableau contenant les dimmensions du PBM
@@ -31,67 +32,62 @@ int main()
 	int n; // variable compteur (pour parcourir toute la ligne)
 	int t;
 	int k;
+	int i;
 	
 	printf("Entrer le nombre de secondes avant refresh... ");
 	scanf("%d", &t);
 	
 	printf("Entrer la taille de chiffre souhaitée... (default pour 5/3 ou sup pour 10/6)   ");
+	fflush(stdout);
 	fgets(taille, sizeof(taille), stdin);
-	switch(taille)
+	
+	if(taille == "default")
 	{
-		case '':
 		k = 1;
-		break;
-		
-		case 'default':
-		k = 1;
-		break;
-		
-		case 'Default':
-		k = 1;
-		break;
-		
-		case 'DEFAULT':
-		k = 1;
-		break;
-		
-		case 'sup':
-		k = 2;
-		break;
-		
-		case 'Sup':
-		k = 2;
-		break;
-		
-		case 'SUP':
-		k = 2;
-		break;
-		
-		default:
-		k = 1;
-		break;
 	}
+	else if(taille == "Default")
+	{
+		k = 1;
+	}
+	else if(taille == "DEFAULT")
+	{
+		k = 1;
+	}
+	else if(taille == "sup")
+	{
+		k = 2;
+	}
+	else if(taille == "Sup")
+	{
+		k = 2;
+	}
+	else if(taille == "SUP")
+	{
+		k = 2;
+	}
+	else
+	{
+		k = 1;
+	}
+	
+	readPBM("../Test/0.pbm", dimnum, type, num0);	// on envoie les paramètres nécéssaires au module de lecture
+	readPBM("../Test/1.pbm", dimnum, type, num1);	
+	readPBM("../Test/2.pbm", dimnum, type, num2);	
+	readPBM("../Test/3.pbm", dimnum, type, num3);
+	readPBM("../Test/4.pbm", dimnum, type, num4);
+	readPBM("../Test/5.pbm", dimnum, type, num5);	
+	readPBM("../Test/6.pbm", dimnum, type, num6);
+	readPBM("../Test/7.pbm", dimnum, type, num7);	
+	readPBM("../Test/8.pbm", dimnum, type, num8);	
+	readPBM("../Test/9.pbm", dimnum, type, num9);
+	readPBM("../Test/sep.pbm", dimnum, type, sep);	
+	readPBM("../Test/space.pbm", dim, type, space);	
 	
 	while(1)
 	{
-		
 		taillefen(colonnes, lignes); // on appelle la fonction pour connaître la taille de la fenêtre
-		readPBM("../Test/0.pbm", dimnum, type, num0);	// on envoie les paramètres nécéssaires au module de lecture
-		readPBM("../Test/1.pbm", dimnum, type, num1);	
-		readPBM("../Test/2.pbm", dimnum, type, num2);	
-		readPBM("../Test/3.pbm", dimnum, type, num3);
-		readPBM("../Test/4.pbm", dimnum, type, num4);
-		readPBM("../Test/5.pbm", dimnum, type, num5);	
-		readPBM("../Test/6.pbm", dimnum, type, num6);
-		readPBM("../Test/7.pbm", dimnum, type, num7);	
-		readPBM("../Test/8.pbm", dimnum, type, num8);	
-		readPBM("../Test/9.pbm", dimnum, type, num9);
-		readPBM("../Test/sep.pbm", dimnum, type, sep);	
-		readPBM("../Test/space.pbm", dim, type, space);	
 
-		printf("avant assemblage");
 		assemblage(ligne, num0, num1, num2, num3, num4, num5, num6, num7, num8, num9, sep, space);
-		printf("après assemblage");
 
 		centreVert(lignes, colonnes, dim[1], k);
 		centreHor(colonnes, dim[0]);
@@ -146,9 +142,8 @@ int main()
 		printf("Le fichier PBM est de type %s\n", type);
 		printf("Largeur = %d Longueur = %d.\n", dim[0], dim[1]);
 		printf("Ce terminal possède %d colonnes et %d lignes.\n", *colonnes, *lignes);*/
-		printf("après affichage");
-
 	}
+	
 	free(ligne);
 	free(lignes);
 	free(colonnes);
