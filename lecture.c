@@ -49,12 +49,11 @@ void readPBM(char *path, int *size, char *type, char *output) // path = chemin d
 		size[1] = atoi(tmp);
 
 		i = 0;
+		j = 0;
 		strcpy(output, "");// Init output at 0
-  		while(i<8) //Put remainings entry in output
+  		while(fgets(tmp, 1024, stdin) != NULL) //Put remainings entry in output
   		{
-  			fgets(tmp, 1024, stdin);
 			strcat(output, tmp);
-			i++;
   		}
   		output = strtok(output, "\n");
 	}
