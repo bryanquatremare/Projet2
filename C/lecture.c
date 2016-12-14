@@ -1,34 +1,35 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/ioctl.h>
-#include <unistd.h>
-#include <math.h>
-#include <errno.h>
-#include <sys/wait.h>
-#include <sys/types.h>
-#include <termios.h>
+#include <stdio.h>//Input/output 
+#include <stdlib.h>//Memory allocation, convert char to int, ...
+#include <string.h>//String manipulation
+#include <unistd.h>//Fork, pipe
+#include <sys/wait.h>//Wait function
 
-char *readPBM(char *path, int *size, char *output)//Input : path, size[2], output
+#define CHAR_PRINTED "#"
+
+/* We use a code to read and process the PBM :
+0 = space
+1 = #
+2 = \n
+*/
+
+void readPBM(char *path, int *size, char *type, char *output)
 {
-	//Define the vars
 	FILE *f;
 
 	char *image = NULL;
 	char *tok = NULL;
   	char tmp[1024];
   	char line[500];
-	char type[500];
 
-	int fd[2];
-  	int i, j, n;
-  	int temp;
+	int fd[2] = {0,0};
+  	int i, j, n, pid;
 
   	//Open the pipe for inter-process communication
   	pipe(&fd[0]);
 
   	//Fork and test if we are child or parent process
-	if(fork()!=0) //Parent process
+  	pid = fork();
+	if(pid) //Parent process
 	{
 		wait(NULL); //Wait for child's end
 		close(fd[1]);//Close pipe's write stream
@@ -38,20 +39,22 @@ char *readPBM(char *path, int *size, char *output)//Input : path, size[2], outpu
 		
 
 		fgets(type, 500, stdin); //Put first entry in type
+		type[strcspn(type, "\n")] = '\0';
 		fgets(tmp, 1024, stdin); //Second in tmp then convert in int
 		size[0] = atoi(tmp); 
 		fgets(tmp, 1024, stdin); //Same for third
 		size[1] = atoi(tmp);
 
-		strcpy(output, "");//Empty output
 		i = 0;
 		j = 0;
+		strcpy(output, "");// Init output at 0
   		while(fgets(tmp, 1024, stdin) != NULL) //Put remainings entry in output
   		{
 			strcat(output, tmp);
   		}
+  		output = strtok(output, "\n");
 	}
-	else //Child process
+	else if(pid == 0) //Child process
 	{
   		close(fd[0]);//Close pipe's read stream
 		close(1);//Close stdout
@@ -59,7 +62,11 @@ char *readPBM(char *path, int *size, char *output)//Input : path, size[2], outpu
 		close(fd[1]);//Close old stdin
 
 
-		f = fopen(path, "r");
+		if(!(f = fopen(path, "r")))
+		{
+			printf("Error while reading the file");
+			exit(EXIT_FAILURE);
+		}
 
 		for(i=0; i<2;)
 		{
@@ -104,13 +111,17 @@ char *readPBM(char *path, int *size, char *output)//Input : path, size[2], outpu
 			}
 			printf("2");//Print 2 as an "End of line" character
 		}
-
+		printf("\n");
 		fclose(f);
 	}
-	return output;
+	else //Print error if fork failed
+	{
+		printf("Error creating a new process");
+		exit(EXIT_FAILURE);
+	}
 }
 
-int **initTable(int **table, int size[])//Input : **table, size[2]
+int **initTable(int **table, int *size)//Input : **table, size[2]
 {
 	int i, j;
 
@@ -118,16 +129,27 @@ int **initTable(int **table, int size[])//Input : **table, size[2]
 
 	table = malloc(sizeof(int *) * size[0] * size[1]);
 
-	for(i=0; i<size[1]; i++)
+	if(table == NULL)//Print error if allocation failed
+	{
+		printf("Error allocating memory");
+		exit(EXIT_FAILURE);
+	}
+
+	for(i=0; i<size[0]; i++)
 	{
 		table[i] = malloc(size[1] * size[0] * sizeof(int));
+		if(table[i] == NULL)//Print error if allocation failed
+		{
+			printf("Error allocating memory");
+			exit(EXIT_FAILURE);
+		}
 	}
 
 	for(i=0; i<size[0]; i++)//Initialize all the table to 0
 	{
 		for(j=0; j<size[1]; j++)
 		{
-	 		table[j][i] = 0;
+	 		table[i][j] = 0;
 	 	}
 	}
 	return table;
@@ -136,48 +158,41 @@ int **initTable(int **table, int size[])//Input : **table, size[2]
 void strToTable(int **table, char *str, int size[])//Input : table[][], str, size[2]
 {
 	int i, j, n;
+
 	i = 0;
 	j = 0;
+
 	for(n=0;n<strlen(str);n++)
 	{
 		if(str[n] == '1')//Put '1' in the table when there is '1' in the string
 		{
-			printf("#");
 			table[i][j] = 1;
 		}
 		else if(str[n] == '2')//Go to next row in the table
 		{
-			printf("\n");
 			j++;
-		}
-		else//Let the 0 in the table
-		{
-			printf(" ");
+			i = -1;
 		}
 		i++;
 	}
 }
 
-int main(int argc, char *argv[])
+void printTable(int **table, int size[])
 {
-	char *str = malloc(4096 * sizeof(char)); //Allocate memory
-
-	//Define the vars
-	int **table = NULL;
-	int size[2];
 	int i, j;
-
-	readPBM("./heart.pbm", size, str); //Read the picture file
-	table = initTable(table, size); //Initialize the table
-	strToTable(table, str, size); //Transform the string to a table
-	for(i=0; i<size[0]; i++) //Print the whole table
+	for(i=0; i<size[1]; i++) //Print the whole table
 	{
-		for(j=0; j<size[1]; j++)
+		for(j=0; j<size[0]; j++)
 		{
-	 		printf("%d", table[i][j]);
+			if(table[j][i] == 1)
+	 		{
+	 			printf(CHAR_PRINTED);
+	 		}
+	 		else
+	 		{
+	 			printf(" ");
+	 		}
 	 	}
 	 	printf("\n");
 	}
-	free(str); //Free memory
-	free(table);
 }
