@@ -16,111 +16,75 @@ void readPBM(char *path, int *size, char *type, char *output)
 {
 	FILE *f;
 
-	char *image = NULL;
 	char *tok = NULL;
-  	char tmp[1024];
   	char line[500];
+	
+  	int i;
 
-	int fd[2] = {0,0};
-  	int i, j, n, pid;
-
-  	//Open the pipe for inter-process communication
-  	pipe(&fd[0]);
-
-  	//Fork and test if we are child or parent process
-  	pid = fork();
-	if(pid) //Parent process
+	if(!(f = fopen(path, "r")))
 	{
-		wait(NULL); //Wait for child's end
-		close(fd[1]);//Close pipe's write stream
-		close(0);//Close stdin
-		dup(fd[0]);//Duplicate stdout
-		close(fd[0]);//Close old stdout
-		
-
-		fgets(type, 500, stdin); //Put first entry in type
-		type[strcspn(type, "\n")] = '\0';
-		fgets(tmp, 1024, stdin); //Second in tmp then convert in int
-		size[0] = atoi(tmp); 
-		fgets(tmp, 1024, stdin); //Same for third
-		size[1] = atoi(tmp);
-
-		i = 0;
-		strcpy(output, "");// Init output at 0
-  		while(i<8) //Put remainings entry in output
-  		{
-  			fgets(tmp, 1024, stdin);
-			strcat(output, tmp);
-			i++;
-  		}
-  		output = strtok(output, "\n");
-	}
-	else if(pid == 0) //Child process
-	{
-  		close(fd[0]);//Close pipe's read stream
-		close(1);//Close stdout
-		dup(fd[1]);//Duplicate stdin
-		close(fd[1]);//Close old stdin
-
-
-		if(!(f = fopen(path, "r")))
-		{
-			printf("Error while reading the file");
-			exit(EXIT_FAILURE);
-		}
-
-		for(i=0; i<2;)
-		{
-			fgets(line, 500, f);
-			if(strncmp(line, "#", 1))//If line start with #, line is a comment so we ignore it
-			{
-				if(i) //If we already made one iteration, get the size of the picture
-				{
-					tok = strtok(line, " ");
-					size[0] = atoi(tok);
-					tok = strtok(NULL, " ");
-					size[1] = atoi(tok);
-					i++;
-				}
-				else//Else get the type of the picture
-				{
-					strcpy(type, line);
-					type[strcspn(type, "\n")] = '\0';
-					i++;
-				}
-				
-			}
-		}
-		//Print type and sizes to the parent process
-		printf("%s\n", type);
-		printf("%d\n", size[0]);
-		printf("%d\n", size[1]);
-		while(fgets(line, 100, f) != NULL)
-		{
-			tok = strtok(line, " ");
-			while(tok != NULL)//Print the lines of the pictures to the parent process while ignoring spaces
-    		{
-				if(!(strncmp(tok, "1", 1)))
-				{
-					printf("1");
-				}
-				else
-				{
-					printf("0");
-				}
-				tok = strtok(NULL, " ");
-			}
-			printf("2");//Print 2 as an "End of line" character
-		}
-		printf("\n");
-		fclose(f);
-	}
-	else //Print error if fork failed
-	{
-		printf("Error creating a new process");
+		printf("Error while reading the file");
 		exit(EXIT_FAILURE);
 	}
+
+	for(i=0; i<2;)	
+	{
+		fgets(line, 500, f);
+		if(strncmp(line, "#", 1))//If line start with #, line is a comment so we ignore it
+		{
+			if(i) //If we already made one iteration, get the size of the picture
+			{
+				tok = strtok(line, " ");
+				size[0] = atoi(tok);
+				tok = strtok(NULL, " ");
+				size[1] = atoi(tok);
+				i++;
+			}
+			else//Else get the type of the picture
+			{
+				strcpy(type, line);
+				type[strcspn(type, "\n")] = '\0';
+				i++;
+			}
+			
+		}
+	}
+	while(fgets(line, 100, f) != NULL)
+	{
+		tok = strtok(line, " ");
+		while(tok != NULL)//Print the lines of the pictures to the parent process while ignoring spaces
+		{
+			if(!(strncmp(tok, "1", 1)))
+			{
+				strcat(output, "1");
+			}
+			else
+			{
+				strcat(output, "0");
+			}
+			tok = strtok(NULL, " ");
+		}
+		strcat(output, "2");//Print 2 as an "End of line" character
+	}
+	printf("\n");
+	fclose(f);
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 int **initTable(int **table, int *size)//Input : **table, size[2]
 {

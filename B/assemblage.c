@@ -16,316 +16,527 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 	int m = 0;
 	int o = 0;
 	int i = 0;
-	char *numeroun = num1;
-	char *numerodeux = num2;
-	char *numerotrois = num3;
-	char *numeroquatre = num4;
-	char *numerocinq = num5;
-	char *numerosix = num6;
-	char *numerosept = num7;
-	char *numerohuit = num8;
-	char *numeroneuf = num9;
-	char *numerozero = num0;
+	char *tok = NULL;
+	
+	char ligneun[300], lignedeux[300], lignetrois[300], lignequatre[300], lignecinq[300];
 
-	char un[300], deux[300], trois[300], quatre[300], cinq[300], six[300];
+	char un[300], deux[300], trois[300], quatre[300], cinq[300], six[300], spaceun[300], spacedeux[300], spacetrois[300], sepun[300], sepdeux[300]; 
 
 	heurelocale(heuredizaine, heureunite, minutedizaine, minuteunite, secondedizaine, secondeunite);
 
 	switch(*heuredizaine)
 	{
 		case 1:
-		strcpy(un, numeroun);
+		strcpy(un, num1);
 		break;
 
 		case 2:	
-		strcpy(un, numerodeux);
+		strcpy(un, num2);
 		break;
 
 		default:
-		strcpy(un, numerozero);
+		strcpy(un, num0);
 		break;
 	}
 	
 
-	switch(*heureunite)
+	switch(*heureunite) //récupère la valeur de *heureunite et entre le pbm correspondant dans le deuxieme chiffre
 	{
 		case 1:
-		strcpy(deux, numeroun);
+		strcpy(deux, num1);
 		break;
 
 		case 2:
-		strcpy(deux, numerodeux);
+		strcpy(deux, num2);
 		break;
 
 		case 3:
-		strcpy(deux, numerotrois);
+		strcpy(deux, num3);
 		break;
 
 		case 4:
-		strcpy(deux, numeroquatre);
+		strcpy(deux, num4);
 		break;
 
 		case 5:
-		strcpy(deux, numerocinq);
+		strcpy(deux, num5);
 		break;
 
 		case 6:
-		strcpy(deux, numerosix);
+		strcpy(deux, num6);
 		break;
 
 		case 7:
-		strcpy(deux, numerosept);
+		strcpy(deux, num7);
 		break;
 
 		case 8:
-		strcpy(deux, numerohuit);
+		strcpy(deux, num8);
 		break;
 
 		case 9:
-		strcpy(deux, numeroneuf);
+		strcpy(deux, num9);
 		break;
 
 		default:
-		strcpy(deux, numerozero);
+		strcpy(deux, num0);
 		break;
 	}
 
 	switch(*minutedizaine)
 	{
 		case 1:
-		strcpy(trois, numeroun);
+		strcpy(trois, num1);
 		break;
 
 		case 2:
-		strcpy(trois, numerodeux);
+		strcpy(trois, num2);
 		break;
 
 		case 3:
-		strcpy(trois, numerotrois);
+		strcpy(trois, num3);
 		break;
 
 		case 4:
-		strcpy(trois, numeroquatre);
+		strcpy(trois, num4);
 		break;
 
 		case 5:
-		strcpy(trois, numerocinq);
+		strcpy(trois, num5);
 		break;
 
 		default:
-		strcpy(trois, numerozero);
+		strcpy(trois, num0);
 		break;
 	}
 
 	switch(*minuteunite)
 	{
 		case 1:
-		strcpy(quatre, numeroun);
+		strcpy(quatre, num1);
 		break;
 
 		case 2:
-		strcpy(quatre, numerodeux);
+		strcpy(quatre, num2);
 		break;
 
 		case 3:
-		strcpy(quatre, numerotrois);
+		strcpy(quatre, num3);
 		break;
 
 		case 4:
-		strcpy(quatre, numeroquatre);
+		strcpy(quatre, num4);
 		break;
 
 		case 5:
-		strcpy(quatre, numerocinq);
+		strcpy(quatre, num5);
 		break;
 
 		case 6:
-		strcpy(quatre, numerosix);
+		strcpy(quatre, num6);
 		break;
 
 		case 7:
-		strcpy(quatre, numerosept);
+		strcpy(quatre, num7);
 		break;
 
 		case 8:
-		strcpy(quatre, numerohuit);
+		strcpy(quatre, num8);
 		break;
 ;
 		case 9:
-		strcpy(quatre, numeroneuf);
+		strcpy(quatre, num9);
 		break;
 
 		default:
-		strcpy(quatre, numerozero);
+		strcpy(quatre, num0);
 		break;
 	}
 
 	switch(*secondedizaine)
 	{
 		case 1:
-		strcpy(cinq, numeroun);
+		strcpy(cinq, num1);
 		break;
 
 		case 2:
-		strcpy(cinq, numerodeux);
+		strcpy(cinq, num2);
 		break;
 
 		case 3:
-		strcpy(cinq, numerotrois);
+		strcpy(cinq, num3);
 		break;
 
 		case 4:
-		strcpy(cinq, numeroquatre);
+		strcpy(cinq, num4);
 		break;
 
 		case 5:
-		strcpy(cinq,  numerocinq);
+		strcpy(cinq,  num5);
 		break;
 
 		default:
-		strcpy(cinq, numerozero);
+		strcpy(cinq, num0);
 		break;
 	}
 
 	switch(*secondeunite)
 	{
 		case 1:
-		strcpy(six, numeroun);
+		strcpy(six, num1);
 		break;
 
 		case 2:
-		strcpy(six, numerodeux);
+		strcpy(six, num2);
 		break;
 
 		case 3:
-		strcpy(six, numerotrois);
+		strcpy(six, num3);
 		break;
 
 		case 4:
-		strcpy(six, numeroquatre);
+		strcpy(six, num4);
 		break;
 
 		case 5:
-		strcpy(six, numerocinq);
+		strcpy(six, num5);
 		break;
 
 		case 6:
-		strcpy(six, numerosix);
+		strcpy(six, num6);
 		break;
 
 		case 7:
-		strcpy(six, numerosept);
+		strcpy(six, num7);
 		break;
 
 		case 8:
-		strcpy(six, numerohuit);
+		strcpy(six, num8);
 		break;
 
 		case 9:
-		strcpy(six, numeroneuf);
+		strcpy(six, num9);
 		break;
 
 		default:
-		strcpy(six, numerozero);
+		strcpy(six, num0);
 		break;
 	}
-	printf("avant le while");
-	while(n < 6 )
-	{
-		printf("Avant le for");
-		for(i = 0; i < 12;)
+	
+	strcpy(spaceun, space);
+	strcpy(spacedeux, space);
+	strcpy(spacetrois, space);
+	strcpy(sepun, sep);
+	strcpy(sepdeux, sep);
+
+	tok = strtok(un, "2");
+	if(tok != NULL)
 		{
-			printf("avant la lecture de la ligne du premier nombre");
-			m = o;
-			
-	while(un[m] != '2')
-				{
-					printf("%c", un[m]);
-					printf("%d", m);
-					sprintf(ligne,"%c", un[m]);
-					m++;
-				}
-			m = o;
-			while(space[m] != '2')
-				{
-					sprintf(ligne,"%c", space[m]);
-					m++;
-				}
-			m = o;
-			while(deux[m] != '2')
-				{
-					sprintf(ligne,"%c", deux[m]);
-					m++;
-				}
-			m = o;
-			while(sep[m] != '2')
-				{
-					sprintf(ligne,"%c", sep[m]);
-					m++;
-				}
-			m = o;
-			while(trois[m] != '2')
-				{
-					sprintf(ligne,"%c", trois[m]);
-					m++;
-				}
-			m = o;
-			while(space[m] != '2')
-				{
-					sprintf(ligne,"%c", space[m]);
-					m++;
-				}
-			m = o;
-			while(quatre[m] != '2')
-				{
-					sprintf(ligne,"%c", quatre[m]);
-					m++;
-				}
-			m = o;
-			while(sep[m] != '2')
-				{
-					sprintf(ligne,"%c", sep[m]);
-					m++;
-				}
-			m = o;
-			while(cinq[m] != '2')
-				{
-					sprintf(ligne,"%c", cinq[m]);
-					m++;
-				}
-			m = o;
-			while(space[m] != '2')
-				{
-					sprintf(ligne,"%c", space[m]);
-					m++;
-				}
-			m = o;
-			while(six[m] != '2')
-				{
-					sprintf(ligne,"%c", six[m]);
-					m++;
-					o++;
-				}
+			sprintf(ligneun,"%s%s", ligneun, tok);
 		}
-		sprintf(ligne,"%c", '2');
-		n++;
-		printf("après l'ecriture de toute une ligne");
-	}
-	printf("après l'ecriture de tout ce qu'il ya a ecrire");
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignedeux,"%s%s", lignedeux, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignetrois,"%s%s", lignetrois, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignequatre,"%s%s", lignequatre, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignecinq,"%s%s", lignecinq,tok);	
+		}
+
+	
+	tok = strtok(spaceun, "2");
+	if(tok != NULL)
+		{
+			sprintf(ligneun,"%s%s", ligneun, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignedeux,"%s%s", lignedeux, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignetrois,"%s%s", lignetrois, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignequatre,"%s%s", lignequatre, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignecinq,"%s%s", lignecinq, tok);
+		}
+
+
+	tok = strtok(deux, "2");
+	if(tok != NULL)
+		{
+			sprintf(ligneun,"%s%s", ligneun, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignedeux,"%s%s", lignedeux, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignetrois,"%s%s", lignetrois, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignequatre,"%s%s", lignequatre, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignecinq,"%s%s", lignecinq, tok);
+		}
+
+
+	tok = strtok(sepun, "2");
+	if(tok != NULL)
+		{
+			sprintf(ligneun,"%s%s", ligneun, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignedeux,"%s%s", lignedeux, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignetrois,"%s%s", lignetrois, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignequatre,"%s%s", lignequatre, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignecinq,"%s%s", lignecinq, tok);
+		}
+
+
+	tok = strtok(trois, "2");
+	if(tok != NULL)
+		{
+			sprintf(ligneun,"%s%s", ligneun, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignedeux,"%s%s", lignedeux, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignetrois,"%s%s", lignetrois, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignequatre,"%s%s", lignequatre, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignecinq,"%s%s", lignecinq, tok);
+		}
+
+
+	tok = strtok(spacedeux, "2");
+	if(tok != NULL)
+		{
+			sprintf(ligneun,"%s%s", ligneun, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignedeux,"%s%s", lignedeux, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignetrois,"%s%s", lignetrois, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignequatre,"%s%s", lignequatre, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignecinq,"%s%s", lignecinq, tok);
+		}
+
+
+	tok = strtok(quatre, "2");
+	if(tok != NULL)
+		{
+			sprintf(ligneun,"%s%s", ligneun, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignedeux,"%s%s", lignedeux, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignetrois,"%s%s", lignetrois, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignequatre,"%s%s", lignequatre, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignecinq,"%s%s", lignecinq, tok);
+		}
+
+
+	tok = strtok(sepdeux, "2");
+	if(tok != NULL)
+		{
+			sprintf(ligneun,"%s%s", ligneun, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignedeux,"%s%s", lignedeux, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignetrois,"%s%s", lignetrois, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignequatre,"%s%s", lignequatre, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignecinq,"%s%s", lignecinq, tok);
+		}
+
+
+	tok = strtok(cinq, "2");
+	if(tok != NULL)
+		{
+			sprintf(ligneun,"%s%s", ligneun, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignedeux,"%s%s", lignedeux, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignetrois,"%s%s", lignetrois, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignequatre,"%s%s", lignequatre, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignecinq,"%s%s", lignecinq, tok);
+		}
+
+
+	tok = strtok(spacetrois, "2");
+	if(tok != NULL)
+		{
+			sprintf(ligneun,"%s%s", ligneun, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignedeux,"%s%s", lignedeux, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignetrois,"%s%s", lignetrois, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignequatre,"%s%s", lignequatre, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignecinq,"%s%s", lignecinq, tok);
+		}
+
+
+	tok = strtok(six, "2");
+	if(tok != NULL)
+		{
+			sprintf(ligneun,"%s%s", ligneun, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignedeux,"%s%s", lignedeux, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignetrois,"%s%s", lignetrois, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignequatre,"%s%s", lignequatre, tok);
+		}
+	tok = strtok(NULL, "2");
+	if(tok != NULL)
+		{
+			sprintf(lignecinq,"%s%s", lignecinq, tok);
+		}
+
+	sprintf(ligne,"%s2%s2%s2%s2%s", ligneun, lignedeux, lignetrois, lignequatre, lignecinq);
+	strcpy(ligneun, "");
+	strcpy(lignedeux, "");
+	strcpy(lignetrois, "");
+	strcpy(lignequatre, "");
+	strcpy(lignecinq, "");
+		
+	
 	free(heuredizaine);
 	free(heureunite);
 	free(minutedizaine);
 	free(minuteunite);
 	free(secondedizaine);
 	free(secondeunite);
-	free(numeroun);
-	free(numerodeux);
-	free(numerotrois);
-	free(numeroquatre);
-	free(numerocinq);
-	free(numerosix);
-	free(numerosept);
-	free(numerohuit);
-	free(numeroneuf);
-	free(numerozero);
 }

@@ -8,7 +8,6 @@
 int main()
 {
 	system("clear");
-	FILE *f;		//création du pointeur vers le fichier
 	char *ligne = malloc(sizeof(char) * 1024);	// création de la chaine de caractère qui stockera la ligne
 	char *num0 = malloc(sizeof(char) * 300);
 	char *num1 = malloc(sizeof(char) * 300);
@@ -22,7 +21,7 @@ int main()
 	char *num9 = malloc(sizeof(char) * 300);
 	char *sep = malloc(sizeof(char) * 300);
 	char *space = malloc(sizeof(char) * 100);
-	char taille[200] = "";
+	char taille[200];
 	char type[10];	// création de la variable contenant le type de PBM
 	char tampon[100] = "";
 	int dimnum[2];	//création d'un tableau contenant les dimmensions du PBM
@@ -37,31 +36,31 @@ int main()
 	printf("Entrer le nombre de secondes avant refresh... ");
 	scanf("%d", &t);
 	
-	printf("Entrer la taille de chiffre souhaitée... (default pour 5/3 ou sup pour 10/6)   ");
+	printf("Entrer la taille de chiffre souhaitée... ('default' pour 5/3 ou 'sup' pour 10/6)   ");
 	fflush(stdout);
-	fgets(taille, sizeof(taille), stdin);
+	scanf("%s", taille);
 	
-	if(taille == "default")
+	if(strcmp(taille, "default") == 0) // compare la variable taille à plusieurs char et agit en conséquence
 	{
 		k = 1;
 	}
-	else if(taille == "Default")
+	else if(strcmp(taille, "Default") == 0)
 	{
 		k = 1;
 	}
-	else if(taille == "DEFAULT")
+	else if(strcmp(taille, "DEFAULT") == 0)
 	{
 		k = 1;
 	}
-	else if(taille == "sup")
+	else if(strcmp(taille, "sup") == 0)
 	{
 		k = 2;
 	}
-	else if(taille == "Sup")
+	else if(strcmp(taille, "Sup") == 0)
 	{
 		k = 2;
 	}
-	else if(taille == "SUP")
+	else if(strcmp(taille, "SUP") == 0)
 	{
 		k = 2;
 	}
@@ -83,15 +82,15 @@ int main()
 	readPBM("../Test/sep.pbm", dimnum, type, sep);	
 	readPBM("../Test/space.pbm", dim, type, space);	
 	
-	while(1)
+	while(1) //le programme s'execute jusqu'à ce qu'il soit kill par ^c
 	{
 		taillefen(colonnes, lignes); // on appelle la fonction pour connaître la taille de la fenêtre
 
-		assemblage(ligne, num0, num1, num2, num3, num4, num5, num6, num7, num8, num9, sep, space);
+		assemblage(ligne, num0, num1, num2, num3, num4, num5, num6, num7, num8, num9, sep, space); //On assemble les différents numéros et caractères dans une seule chaîne de caractère selon l'heure
 
-		centreVert(lignes, colonnes, dim[1], k);
-		centreHor(colonnes, dim[0]);
-		for(n=0;n<strlen(ligne);n++)
+		centreVert(lignes, colonnes, dim[1], k); //ajout de sauts de lignes au dessus de l'heure affichée
+		centreHor(colonnes, dim[0]); //ajout d'espaces au début de l'heure affichée pour centrage horizontal
+		for(n=0;n<strlen(ligne);n++) //fonction qui affiche l'heure à partir de la chaine de caractère crée dans assemblage
 		{
 			if(ligne[n] == '1')	// si on lit 1 dans le .pbm
 			{
@@ -123,7 +122,7 @@ int main()
 				}
 			}
 		}
-		centreVert(lignes, colonnes, dim[1], k);
+		centreVert(lignes, colonnes, dim[1], k); // ajout de saut de ligne après l'affichage de l'heure
 		printf("Cet écran sera actualisé dans quelques secondes ");
 		fflush(stdout);
 		i = 0;
@@ -131,7 +130,7 @@ int main()
 		{
 			
 			sleep(1);
-			printf(". ");
+			printf(".");
 			fflush(stdout);
 			i++;
 		}
