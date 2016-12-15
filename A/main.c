@@ -1,7 +1,8 @@
 #include <stdio.h>//Input/Output
 #include <stdlib.h>//Malloc, ...
 #include <string.h>//String manipulation
-#include <sys/ioctl.h>//Get term size 
+#include <sys/ioctl.h>//Get term size
+#include <unistd.h>
 
 #include "static.h"
 #include "PBM.h"
