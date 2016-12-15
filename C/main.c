@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 	int col = w.ws_col;
 	int row = w.ws_row;
 
-//Init some var
+//Init some vars
 	int i, j, redo;
 	char **table = malloc(col * row * sizeof(char*));
 	char c = ' ';
