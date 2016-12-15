@@ -4,7 +4,7 @@
 #include <sys/ioctl.h>//Get term size 
 
 #include "static.h"
-#include "lecture.h"
+#include "PBM.h"
 
 int main(int argc, char *argv[])
 {
