@@ -1,1 +1,0 @@
-void readPBM(char *path, int size[], char *type, char *output);//Input path, size[2], type, output
