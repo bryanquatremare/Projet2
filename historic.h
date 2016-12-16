@@ -18,3 +18,5 @@ void reverseTriDate(char **table);//Sort by decreasing dates
 void triType(char **table);//Sort by type
 
 void printHisto(char **table); //Print the historic
+
+void writeHisto(int type, char *arg); //Write the historic when we exec a program

@@ -3,7 +3,33 @@
 #include <string.h>
 #include <time.h>
 
-#define PATH_HISTO "historique"
+void writeHisto(int type, char *arg)
+{
+	char annees[10];
+	char mois[10];
+	char jours[10];
+	char heures[10];
+	char minutes[10];
+	char secondes[10];
+	FILE *log;
+
+	time_t timer; // création de timer avec un paramètre spécial time_t afin qu'il puisse stocker toute la date
+	struct tm * t; // création de t qui pourra contenir la date sous la forme d'une structure
+	time(&timer); //réception de la date dans timer
+	t = localtime(&timer); // réception de la date contenue dans timer dans la structure t
+	
+	sprintf(annees,"%04u",t->tm_year+1900);
+	sprintf(mois,"%02u",t->tm_mon);
+	sprintf(jours,"%02u",t->tm_mday);
+	sprintf(heures,"%02u",t->tm_hour);
+	sprintf(minutes,"%02u",t->tm_min);
+	sprintf(secondes,"%02u",t->tm_sec);
+
+	log = fopen("historique", "a+");
+
+	fprintf(log, "%s/%s/%s;%s:%s:%s;%d;%s\n", jours, mois, annees, heures, minutes, secondes, type, arg);
+	fclose(log);
+}
 
 int typeLine(char **table, int i)//Get the type of the i line of the file
 {
@@ -60,10 +86,10 @@ int num(char *str)//Transform the date in a timestamp
 	tm.tm_year = atoi(strtok(NULL, "/"));
 	tm.tm_hour = atoi(strtok(hours, ":"));
 	tm.tm_min = atoi(strtok(NULL, ":"));
+	tm.tm_sec = atoi(strtok(NULL, ":"));;
 	tm.tm_wday = 0;
 	tm.tm_yday = 0;
 	tm.tm_isdst = 0;
-	tm.tm_sec = 0;
 
 	time = mktime(&tm);
 
@@ -182,22 +208,3 @@ void printHisto(char **table) //Print the historic
 	for(i=0; i<lineNumber(); i++)
 		printf("%s", table[i]);
 }
-
-// int main(int argc, char *argv[])
-// {
-// 	char **table = NULL;
-// 	int i;
-// 	int nbLigne = lineNumber();
-
-// 	table = histoToTable(table);
-// 	printHisto(table);
-// 	reverseTriDate(table);
-// 	printf("\nTrié :\n");
-// 	printHisto(table);
-
-// 	for(i=0; i<nbLigne; i++)
-// 		free(table[i]);
-
-// 	free(table);
-// 	return 0;
-// }
