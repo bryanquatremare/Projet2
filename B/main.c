@@ -21,6 +21,8 @@ int main()
 	char *num9 = malloc(sizeof(char) * 300);
 	char *sep = malloc(sizeof(char) * 300);
 	char *space = malloc(sizeof(char) * 100);
+	char path[256];
+	char path2[256];
 	char taille[200];
 	char type[10];	// création de la variable contenant le type de PBM
 	char tampon[100] = "";
@@ -33,14 +35,36 @@ int main()
 	int k;
 	int i;
 	
-	printf("Entrer le nombre de secondes avant refresh... ");
-	scanf("%d", &t);
+	if(!(getenv("EXIASAVER2_SLEEP") == NULL))
+	{
+		t = atoi(getenv("EXIASAVER2_SLEEP"));
+	}
+	else
+	{
+		t = 10;
+	}
 	
-	printf("Entrer la taille de chiffre souhaitée... ('default' pour 5/3 ou 'sup' pour 10/6)   ");
-	fflush(stdout);
-	scanf("%s", taille);
+	if(!(getenv("EXIASAVER2_TAILLE") == NULL))
+	{
+		strcpy(taille, getenv("EXIASAVER2_TAILLE"));
+	}
+	else
+	{
+		strcpy(taille, "default");
+	}
+
+	if(!(getenv("EXIASAVER2_PBM") == NULL))
+	{
+		strcpy(path, getenv("EXIASAVER2_PBM"));
+		strcpy(path2, getenv("EXIASAVER2_PBM"));
+	}
+	else
+	{
+		strcpy(path, ".");
+		strcpy(path2, ".");
+	}
 	
-	if(strcmp(taille, "default") == 0) // compare la variable taille à plusieurs char et agit en conséquence
+	if(strcmp(taille, "default") == 0) // compare la variable taille à plusieurs autres possibilitées de char et agit en conséquence "k = 1" equivaut au format de base des caractères et "k = 2" équivaut au format 10 par 6
 	{
 		k = 1;
 	}
@@ -69,24 +93,38 @@ int main()
 		k = 1;
 	}
 	
-	readPBM("../Test/0.pbm", dimnum, type, num0);	// on envoie les paramètres nécéssaires au module de lecture
-	readPBM("../Test/1.pbm", dimnum, type, num1);	
-	readPBM("../Test/2.pbm", dimnum, type, num2);	
-	readPBM("../Test/3.pbm", dimnum, type, num3);
-	readPBM("../Test/4.pbm", dimnum, type, num4);
-	readPBM("../Test/5.pbm", dimnum, type, num5);	
-	readPBM("../Test/6.pbm", dimnum, type, num6);
-	readPBM("../Test/7.pbm", dimnum, type, num7);	
-	readPBM("../Test/8.pbm", dimnum, type, num8);	
-	readPBM("../Test/9.pbm", dimnum, type, num9);
-	readPBM("../Test/sep.pbm", dimnum, type, sep);	
-	readPBM("../Test/space.pbm", dim, type, space);	
+	sprintf(path2, "%s/0.pbm", path);
+	readPBM(path2, dimnum, type, num0);	// on envoie les paramètres nécéssaires au module de lecture
+	sprintf(path2, "%s/1.pbm", path);
+	readPBM(path2, dimnum, type, num1);
+	sprintf(path2, "%s/2.pbm", path);	
+	readPBM(path2, dimnum, type, num2);
+	sprintf(path2, "%s/3.pbm", path);	
+	readPBM(path2, dimnum, type, num3);
+	sprintf(path2, "%s/4.pbm", path);
+	readPBM(path2, dimnum, type, num4);
+	sprintf(path2, "%s/5.pbm", path);
+	readPBM(path2, dimnum, type, num5);
+	sprintf(path2, "%s/6.pbm", path);	
+	readPBM(path2, dimnum, type, num6);
+	sprintf(path2, "%s/7.pbm", path);
+	readPBM(path2, dimnum, type, num7);
+	sprintf(path2, "%s/8.pbm", path);	
+	readPBM(path2, dimnum, type, num8);
+	sprintf(path2, "%s/9.pbm", path);	
+	readPBM(path2, dimnum, type, num9);
+	sprintf(path2, "%s/sep.pbm", path);
+	readPBM(path2, dimnum, type, sep);
+	sprintf(path2, "%s/space.pbm", path);	
+	readPBM(path2, dim, type, space);	
 	
 	while(1) //le programme s'execute jusqu'à ce qu'il soit kill par ^c
 	{
 		taillefen(colonnes, lignes); // on appelle la fonction pour connaître la taille de la fenêtre
 
 		assemblage(ligne, num0, num1, num2, num3, num4, num5, num6, num7, num8, num9, sep, space); //On assemble les différents numéros et caractères dans une seule chaîne de caractère selon l'heure
+		assemblage(ligne, num0, num1, num2, num3, num4, num5, num6, num7, num8, num9, sep, space);
+		assemblage(ligne, num0, num1, num2, num3, num4, num5, num6, num7, num8, num9, sep, space);
 
 		centreVert(lignes, colonnes, dim[1], k); //ajout de sauts de lignes au dessus de l'heure affichée
 		centreHor(colonnes, dim[0]); //ajout d'espaces au début de l'heure affichée pour centrage horizontal
@@ -124,11 +162,10 @@ int main()
 		}
 		centreVert(lignes, colonnes, dim[1], k); // ajout de saut de ligne après l'affichage de l'heure
 		printf("Cet écran sera actualisé dans quelques secondes ");
-		fflush(stdout);
+		fflush(stdout); //oblige le programme à afficher la sortie
 		i = 0;
-		while(i < t)
+		while(i < t) //tant que le temps avant actualisation entré par l'utilisateur n'est pas écoulé
 		{
-			
 			sleep(1);
 			printf(".");
 			fflush(stdout);
@@ -143,7 +180,7 @@ int main()
 		printf("Ce terminal possède %d colonnes et %d lignes.\n", *colonnes, *lignes);*/
 	}
 	
-	free(ligne);
+	free(ligne); //libération des espaces réservés aux pointeurs
 	free(lignes);
 	free(colonnes);
 	free(num0);

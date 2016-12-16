@@ -31,15 +31,16 @@ int n = 1; // compteur de saut de ligne
 	}
 }
 
-void centreHor(int *axecol, int axepbm)
+void centreHor(int *axecol, int k)
 {
 	int n = 1;
-	if((*axecol/2)-(axepbm/2) % 2 != 0) // si le nombre total de sauts de lignes est impair
+
+	if((*axecol/2)-(27/2) % 2 != 0) // si le nombre total de sauts de lignes est impair
 		{
 			n = 2; // rajouter un saut de ligne
 		}
 
-	while(n != (*axecol/2)-(axepbm/2))	
+	while(n != (*axecol/2)-(27/2))	
 	{
 		printf(" ");
 		n++;

@@ -24,7 +24,7 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 
 	heurelocale(heuredizaine, heureunite, minutedizaine, minuteunite, secondedizaine, secondeunite);
 
-	switch(*heuredizaine)
+	switch(*heuredizaine)//récupère la valeur de *heuredizaine et entre la chaine de caractere correspondante au  pbm adapté dans le deuxieme chiffre
 	{
 		case 1:
 		strcpy(un, num1);
@@ -40,7 +40,7 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 	}
 	
 
-	switch(*heureunite) //récupère la valeur de *heureunite et entre le pbm correspondant dans le deuxieme chiffre
+	switch(*heureunite) //
 	{
 		case 1:
 		strcpy(deux, num1);
@@ -83,7 +83,7 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 		break;
 	}
 
-	switch(*minutedizaine)
+	switch(*minutedizaine) //
 	{
 		case 1:
 		strcpy(trois, num1);
@@ -110,7 +110,7 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 		break;
 	}
 
-	switch(*minuteunite)
+	switch(*minuteunite) //
 	{
 		case 1:
 		strcpy(quatre, num1);
@@ -153,7 +153,7 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 		break;
 	}
 
-	switch(*secondedizaine)
+	switch(*secondedizaine) //
 	{
 		case 1:
 		strcpy(cinq, num1);
@@ -180,7 +180,7 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 		break;
 	}
 
-	switch(*secondeunite)
+	switch(*secondeunite) //
 	{
 		case 1:
 		strcpy(six, num1);
@@ -223,13 +223,13 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 		break;
 	}
 	
-	strcpy(spaceun, space);
+	strcpy(spaceun, space);	// Ajout des chaines de caractères correspondantes aux caractères souhaités, afin que les mêmes chaînes "space" et "sep" ne soient pas manipulés plusieurs fois par les strtok dans une boucle.
 	strcpy(spacedeux, space);
 	strcpy(spacetrois, space);
 	strcpy(sepun, sep);
 	strcpy(sepdeux, sep);
 
-	tok = strtok(un, "2");
+	tok = strtok(un, "2"); //récupération et découpage des chaines de caractères dans de nouvelles chaines explicitement appelés ligneun, lignedeux, lignetrois, lignequatre et lignecinq
 	if(tok != NULL)
 		{
 			sprintf(ligneun,"%s%s", ligneun, tok);
@@ -256,7 +256,7 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 		}
 
 	
-	tok = strtok(spaceun, "2");
+	tok = strtok(spaceun, "2"); // même chose pour chaque caractère qui sera a afficher
 	if(tok != NULL)
 		{
 			sprintf(ligneun,"%s%s", ligneun, tok);
@@ -283,7 +283,7 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 		}
 
 
-	tok = strtok(deux, "2");
+	tok = strtok(deux, "2"); //
 	if(tok != NULL)
 		{
 			sprintf(ligneun,"%s%s", ligneun, tok);
@@ -310,7 +310,7 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 		}
 
 
-	tok = strtok(sepun, "2");
+	tok = strtok(sepun, "2"); //
 	if(tok != NULL)
 		{
 			sprintf(ligneun,"%s%s", ligneun, tok);
@@ -337,7 +337,7 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 		}
 
 
-	tok = strtok(trois, "2");
+	tok = strtok(trois, "2"); //
 	if(tok != NULL)
 		{
 			sprintf(ligneun,"%s%s", ligneun, tok);
@@ -364,7 +364,7 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 		}
 
 
-	tok = strtok(spacedeux, "2");
+	tok = strtok(spacedeux, "2"); //
 	if(tok != NULL)
 		{
 			sprintf(ligneun,"%s%s", ligneun, tok);
@@ -391,7 +391,7 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 		}
 
 
-	tok = strtok(quatre, "2");
+	tok = strtok(quatre, "2"); //
 	if(tok != NULL)
 		{
 			sprintf(ligneun,"%s%s", ligneun, tok);
@@ -418,7 +418,7 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 		}
 
 
-	tok = strtok(sepdeux, "2");
+	tok = strtok(sepdeux, "2"); //
 	if(tok != NULL)
 		{
 			sprintf(ligneun,"%s%s", ligneun, tok);
@@ -445,7 +445,7 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 		}
 
 
-	tok = strtok(cinq, "2");
+	tok = strtok(cinq, "2"); //
 	if(tok != NULL)
 		{
 			sprintf(ligneun,"%s%s", ligneun, tok);
@@ -472,7 +472,7 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 		}
 
 
-	tok = strtok(spacetrois, "2");
+	tok = strtok(spacetrois, "2"); //
 	if(tok != NULL)
 		{
 			sprintf(ligneun,"%s%s", ligneun, tok);
@@ -499,7 +499,7 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 		}
 
 
-	tok = strtok(six, "2");
+	tok = strtok(six, "2"); //
 	if(tok != NULL)
 		{
 			sprintf(ligneun,"%s%s", ligneun, tok);
@@ -525,15 +525,15 @@ void assemblage(char *ligne, char *num0, char *num1, char *num2, char *num3, cha
 			sprintf(lignecinq,"%s%s", lignecinq, tok);
 		}
 
-	sprintf(ligne,"%s2%s2%s2%s2%s", ligneun, lignedeux, lignetrois, lignequatre, lignecinq);
-	strcpy(ligneun, "");
+	sprintf(ligne,"%s2%s2%s2%s2%s", ligneun, lignedeux, lignetrois, lignequatre, lignecinq); // assemble toutes les lignes dans l'ordre et séparées par un 2 qui permettra au programme suivant de repérer les sauts de ligne
+	strcpy(ligneun, ""); //réinitialisation des char des lignes
 	strcpy(lignedeux, "");
 	strcpy(lignetrois, "");
 	strcpy(lignequatre, "");
 	strcpy(lignecinq, "");
 		
 	
-	free(heuredizaine);
+	free(heuredizaine); //libérations des espaces réservés aux pointeurs de cette fonction
 	free(heureunite);
 	free(minutedizaine);
 	free(minuteunite);
