@@ -1,6 +1,6 @@
 # Projet2
 
-cd Release
-./launcher
-ou
-./launcher -stats
+cd Release  
+./launcher  
+ou  
+./launcher -stats  
